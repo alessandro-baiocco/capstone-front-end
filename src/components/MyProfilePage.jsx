@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import ProfileImage from "./profilePageComponents/ProfileImage";
 import ProfileInformations from "./profilePageComponents/ProfileInformations";
+import ProfileDescription from "./profilePageComponents/ProfileDescription";
 
 const MyProfilePage = () => {
   return (
@@ -14,21 +15,23 @@ const MyProfilePage = () => {
         }}
         className="p-5"
       >
-        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
+        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }} className="p-0">
           <Row>
             <Col
               xs={12}
               md={5}
               lg={4}
-              className="justify-content-center d-flex flex-column p-3 "
+              className=" d-flex flex-column p-3 "
               style={{ borderRight: "solid 3px #89C0F2" }}
             >
               <ProfileImage></ProfileImage>
             </Col>
-            <Col xs={12} md={7} lg={8}>
+            <Col xs={12} md={7} lg={8} className="pt-4">
               <ProfileInformations></ProfileInformations>
             </Col>
-            <Col xs={12}></Col>
+            <Col xs={12}>
+              <ProfileDescription></ProfileDescription>
+            </Col>
           </Row>
         </Container>
       </Container>
