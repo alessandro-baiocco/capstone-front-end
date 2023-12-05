@@ -2,7 +2,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 
 const MainPageCards = () => {
   return (
-    <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 1rem #89C0F2" }}>
+    <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
       <Row>
         {Array.from({ length: 12 }, () => Math.floor(Math.random() * 40)).map((card) => {
           return (

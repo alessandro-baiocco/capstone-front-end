@@ -4,8 +4,8 @@ const HeroHome = () => {
   return (
     <>
       <Container
-        className="d-flex my-4 p-0"
-        style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 1rem #89C0F2" }}
+        className="d-flex mb-4 p-0"
+        style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}
       >
         <Row style={{ overflowY: "auto" }}>
           <Col xs={12} md={6} lg={4}>
