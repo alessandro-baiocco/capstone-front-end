@@ -5,6 +5,7 @@ import MyHome from "./components/MyHome";
 import { BrowserRouter } from "react-router-dom";
 import MyNavBar from "./components/MyNavBar";
 import ArticlePage from "./components/ArticlePage";
+import MyProfilePage from "./components/MyProfilePage";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MyHome />} />
         <Route path="/article/:id" element={<ArticlePage />} />
+        <Route path="/myProfile" element={<MyProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
