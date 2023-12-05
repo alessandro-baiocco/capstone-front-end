@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import ProfileImage from "./profilePageComponents/ProfileImage";
+import ProfileInformations from "./profilePageComponents/ProfileInformations";
 
 const MyProfilePage = () => {
   return (
@@ -24,7 +25,10 @@ const MyProfilePage = () => {
             >
               <ProfileImage></ProfileImage>
             </Col>
-            <Col xs={12} md={7} lg={8}></Col>
+            <Col xs={12} md={7} lg={8}>
+              <ProfileInformations></ProfileInformations>
+            </Col>
+            <Col xs={12}></Col>
           </Row>
         </Container>
       </Container>
