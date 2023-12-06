@@ -7,6 +7,7 @@ import MyNavBar from "./components/MyNavBar";
 import ArticlePage from "./components/ArticlePage";
 import MyProfilePage from "./components/MyProfilePage";
 import SignUpPage from "./components/SignUpPage";
+import LogPage from "./components/LogPage";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/article/:id" element={<ArticlePage />} />
         <Route path="/profile/:id" element={<MyProfilePage />} />
         <Route path="/register" element={<SignUpPage />} />
+        <Route path="/log" element={<LogPage />} />
       </Routes>
     </BrowserRouter>
   );
