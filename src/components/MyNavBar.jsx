@@ -16,7 +16,7 @@ const MyNavBar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto d-flex">
-            <Link to="/MyProfile" className="text-light text-decoration-none m-2 fw-bold">
+            <Link to="/profile/me" className="text-light text-decoration-none m-2 fw-bold">
               Profilo
             </Link>
             <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
@@ -25,12 +25,12 @@ const MyNavBar = () => {
           </Nav>
           <Nav>
             <Button className="btn-primary rounded me-2">
-              <Link to="/registerPage" className="text-light text-decoration-none m-2 fw-bold">
+              <Link to="/register" className="text-light text-decoration-none m-2 fw-bold">
                 SIGN UP
               </Link>
             </Button>
             <Button className="btn-info rounded">
-              <Link to="/logPage" className="text-light text-decoration-none m-2 fw-bold">
+              <Link to="/log" className="text-light text-decoration-none m-2 fw-bold">
                 Log IN
               </Link>
             </Button>

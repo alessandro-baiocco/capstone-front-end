@@ -15,7 +15,7 @@ const MyProfilePage = () => {
         }}
         className="p-5"
       >
-        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }} className=" ">
+        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
           <Row>
             <Col xs={12} md={5} lg={4} className="p-3" style={{ borderRight: "solid 3px #89C0F2" }}>
               <ProfileImage></ProfileImage>

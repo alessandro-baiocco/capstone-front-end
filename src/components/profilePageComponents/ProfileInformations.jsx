@@ -3,7 +3,7 @@ import { Button, Container, FloatingLabel, Form, Modal } from "react-bootstrap";
 
 const ProfileInformations = () => {
   //modal
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   function handleShow(breakpoint) {
     setFullscreen(breakpoint);

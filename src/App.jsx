@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import MyNavBar from "./components/MyNavBar";
 import ArticlePage from "./components/ArticlePage";
 import MyProfilePage from "./components/MyProfilePage";
+import SignUpPage from "./components/SignUpPage";
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MyHome />} />
         <Route path="/article/:id" element={<ArticlePage />} />
-        <Route path="/myProfile" element={<MyProfilePage />} />
+        <Route path="/profile/:id" element={<MyProfilePage />} />
+        <Route path="/register" element={<SignUpPage />} />
       </Routes>
     </BrowserRouter>
   );
