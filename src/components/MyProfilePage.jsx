@@ -15,21 +15,15 @@ const MyProfilePage = () => {
         }}
         className="p-5"
       >
-        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }} className="p-0">
+        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }} className=" ">
           <Row>
-            <Col
-              xs={12}
-              md={5}
-              lg={4}
-              className=" d-flex flex-column p-3 "
-              style={{ borderRight: "solid 3px #89C0F2" }}
-            >
+            <Col xs={12} md={5} lg={4} className="p-3" style={{ borderRight: "solid 3px #89C0F2" }}>
               <ProfileImage></ProfileImage>
             </Col>
             <Col xs={12} md={7} lg={8} className="pt-4">
               <ProfileInformations></ProfileInformations>
             </Col>
-            <Col xs={12}>
+            <Col xs={12} className="p-0">
               <ProfileDescription></ProfileDescription>
             </Col>
           </Row>

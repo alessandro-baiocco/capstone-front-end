@@ -4,6 +4,7 @@ import ArticleStory from "./articlePageComponents/ArticleStory";
 import ArticleSpecitics from "./articlePageComponents/ArticleSpecitics";
 import ArticleEsperience from "./articlePageComponents/ArticleEsperience";
 import ArticleSuggestion from "./articlePageComponents/ArticleSuggestion";
+import CommentZone from "./articlePageComponents/CommentZone";
 
 const ArticlePage = () => {
   return (
@@ -34,7 +35,13 @@ const ArticlePage = () => {
             <ArticleSuggestion></ArticleSuggestion>
           </Col>
         </Row>
+
+        <p className="text-light" style={{ borderTop: "solid 3px #89C0F2" }}>
+          <strong className="fw-bold">AUTORE ARTICOLO :</strong> mario rossi
+        </p>
       </Container>
+
+      <CommentZone></CommentZone>
     </Container>
   );
 };

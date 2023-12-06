@@ -1,1 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap");
+
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2472de;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #89c0f2;
+  border-radius: 10px;
+  border: 3px none #ffffff;
+}
