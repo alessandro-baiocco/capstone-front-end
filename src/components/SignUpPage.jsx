@@ -10,7 +10,9 @@ const SignUpPage = () => {
   };
   const handleSubmit = (propertyName, propertyValue) => {
     if (user.nome !== "" || user.cognome !== "" || user.username !== "" || user.password !== "" || user.email !== "") {
+      //implementare logica da inviare al backend
       console.log(user);
+      setUser({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
