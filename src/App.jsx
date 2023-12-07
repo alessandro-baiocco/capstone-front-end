@@ -8,6 +8,7 @@ import ArticlePage from "./components/ArticlePage";
 import MyProfilePage from "./components/MyProfilePage";
 import SignUpPage from "./components/SignUpPage";
 import LogPage from "./components/LogPage";
+import PostArticlePage from "./components/PostArticlePage";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/profile/:id" element={<MyProfilePage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/log" element={<LogPage />} />
+        <Route path="/PostArticle" element={<PostArticlePage />} />
       </Routes>
     </BrowserRouter>
   );
