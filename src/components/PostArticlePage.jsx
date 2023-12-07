@@ -3,6 +3,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 const PostArticlePage = () => {
   //compilazione campi
+  const [remove, setRemove] = useState("");
   const [error, setError] = useState(false);
   const [generi, setGeneri] = useState([]);
   const [errorText, setErrorText] = useState("");
@@ -20,17 +21,18 @@ const PostArticlePage = () => {
   const handleChange = (propertyName, propertyValue) => {
     if (propertyName !== "genere") {
       setArticle({ ...article, [propertyName]: propertyValue });
-    } else if (!article.genere.includes(propertyValue)) {
+    } else if (!article.genere.includes(propertyValue) && article.genere.length < 3) {
       article.genere.push(propertyValue);
       setGeneri([...generi, propertyValue]);
+    } else if (!article.genere.includes(propertyValue) && article.genere.length > 2) {
+      setErrorText("lista troppo lunga (massimo 3 generi)");
+      setError(true);
     }
   };
 
-  const handleRemove = (index) => {
-    article.genere.splice(index, 1);
-    generi.splice(index, 1);
-    const newList = generi;
-    setGeneri(newList);
+  const handleRemove = (genre) => {
+    article.genere.splice(article.genere.indexOf(genre), 1);
+    generi.splice(generi.indexOf(genre), 1);
   };
 
   const handleSubmit = (propertyName, propertyValue) => {
@@ -66,16 +68,8 @@ const PostArticlePage = () => {
   };
   //-----------------------------
 
-  //modal
-  const [show, setShow] = useState(false);
-  const [fullscreen, setFullscreen] = useState(true);
-  function handleShow(breakpoint) {
-    setFullscreen(breakpoint);
-    setShow(true);
-  }
-
   //refresh per genere
-  useEffect((payload) => {}, [generi]);
+  useEffect((payload) => {}, [generi, remove]);
 
   return (
     <Container
@@ -202,15 +196,16 @@ const PostArticlePage = () => {
                 <option value="SIMULATORE">SIMULATORE</option>
               </Form.Select>
             </Form.Group>
-            <ul className="d-flex" style={{ listStyle: "none" }}>
+            <ul className="d-flex" style={{ listStyle: "none", height: "24px" }}>
               {generi.map((genre, i) => {
                 return (
                   <li className="mx-2 fw-bold" key={`list-item-${i}`}>
                     {genre}
                     <i
                       className="bi bi-x-circle mx-1"
-                      onClick={() => {
-                        handleRemove(i);
+                      onClick={(e) => {
+                        handleRemove(genre);
+                        setRemove(genre);
                       }}
                     ></i>
                   </li>
