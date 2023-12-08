@@ -53,7 +53,7 @@ const PostArticlePage = () => {
       setArticle({
         titolo: "",
         svillupatore: "",
-        pubbliczione: "",
+        pubblicazione: "",
         tema: "",
         genere: [],
         storia: "",
@@ -61,6 +61,8 @@ const PostArticlePage = () => {
         consigli: "",
         descrizione: "",
       });
+      setGeneri([]);
+      setRemove("");
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
@@ -104,6 +106,7 @@ const PostArticlePage = () => {
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
                 onChange={(e) => handleChange("titolo", e.target.value)}
+                value={article.titolo}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -114,6 +117,7 @@ const PostArticlePage = () => {
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
                 onChange={(e) => handleChange("svillupatore", e.target.value)}
+                value={article.svillupatore}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -124,6 +128,7 @@ const PostArticlePage = () => {
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
                 onChange={(e) => handleChange("pubblicazione", e.target.value)}
+                value={article.pubblicazione}
               />
               <Form.Label className="fw-bold">tema</Form.Label>
 
@@ -136,6 +141,7 @@ const PostArticlePage = () => {
                 className="text-light bg-dark"
                 size="lg"
               >
+                <option value="">seleziona un tema</option>
                 <option value="FANTASCIENTIFICO">FANTASCIENTIFICO</option>
                 <option value="FANTASY">FANTASY</option>
                 <option value="CONTEMPORANEO">CONTEMPORANEO</option>
@@ -196,10 +202,10 @@ const PostArticlePage = () => {
                 <option value="SIMULATORE">SIMULATORE</option>
               </Form.Select>
             </Form.Group>
-            <ul className="d-flex" style={{ listStyle: "none", height: "24px" }}>
+            <ul className="d-flex" style={{ listStyle: "none", height: "30px", border: "solid 3px  #89C0F2" }}>
               {generi.map((genre, i) => {
                 return (
-                  <li className="mx-2 fw-bold" key={`list-item-${i}`}>
+                  <li className="mx-2 fw-bold" key={`list-item-${i}`} style={{ border: "solid 1px  #89C0F2" }}>
                     {genre}
                     <i
                       className="bi bi-x-circle mx-1"
@@ -230,6 +236,7 @@ const PostArticlePage = () => {
               as="textarea"
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("storia", e.target.value)}
+              value={article.storia}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -239,6 +246,7 @@ const PostArticlePage = () => {
               as="textarea"
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("esperienza", e.target.value)}
+              value={article.esperienza}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -248,6 +256,7 @@ const PostArticlePage = () => {
               as="textarea"
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("consigli", e.target.value)}
+              value={article.consigli}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -257,6 +266,7 @@ const PostArticlePage = () => {
               as="textarea"
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("descrizione", e.target.value)}
+              value={article.descrizione}
             />
           </Form.Group>
           <Button
