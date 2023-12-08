@@ -10,6 +10,9 @@ const ProfileDescription = () => {
           scelerisque arcu in, lobortis libero. Nulla hendrerit orci nec condimentum condimentum
         </p>
       </Container>
+      <p className="text-light fs-2">
+        <span className="fw-bold text-light fs-2 ps-2">Genere preferito</span> : SPARATUTTO
+      </p>
     </>
   );
 };

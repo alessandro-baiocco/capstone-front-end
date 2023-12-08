@@ -40,23 +40,38 @@ const ProfileInformations = () => {
         </Button>
       </Container>
 
-      <p className="text-light m-0 mb-4 fs-3 me-3" style={{ border: "solid 3px  #89C0F2", backgroundColor: "black" }}>
+      <p
+        className="text-light m-0 mb-4 fs-3 me-3"
+        style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
+      >
         coso119
       </p>
       <p className="fw-bold text-light m-0 fs-3"> EMAIL</p>
-      <p className="text-light m-0 mb-4 fs-3 me-3" style={{ border: "solid 3px  #89C0F2", backgroundColor: "black" }}>
+      <p
+        className="text-light m-0 mb-4 fs-3 me-3"
+        style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
+      >
         MARIOQUELLOVERO@VERO.it
       </p>
       <p className="fw-bold text-light m-0 fs-3"> NOME</p>
-      <p className="text-light m-0 mb-4 fs-3 me-3" style={{ border: "solid 3px  #89C0F2", backgroundColor: "black" }}>
+      <p
+        className="text-light m-0 mb-4 fs-3 me-3"
+        style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
+      >
         MARIO
       </p>
       <p className="fw-bold text-light m-0 fs-3"> COGNOME</p>
-      <p className="text-light m-0 mb-4 fs-3 me-3" style={{ border: "solid 3px  #89C0F2", backgroundColor: "black" }}>
+      <p
+        className="text-light m-0 mb-4 fs-3 me-3"
+        style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
+      >
         ROSSI
       </p>
       <p className="fw-bold text-light m-0 fs-3"> PASSWORD</p>
-      <p className="text-light m-0 mb-4 fs-3 me-3" style={{ border: "solid 3px  #89C0F2", backgroundColor: "black" }}>
+      <p
+        className="text-light m-0 mb-4 fs-3 me-3"
+        style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
+      >
         *********
       </p>
 
@@ -121,6 +136,49 @@ const ProfileInformations = () => {
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("notePersonali", e.target.value)}
             />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="fw-bold">GENERE</Form.Label>
+
+            <Form.Select
+              aria-label="Default select example"
+              onChange={(e) => {
+                handleChange("genere", e.target.value);
+              }}
+              style={{ border: "solid 3px  #89C0F2" }}
+              size="lg"
+            >
+              <option value="">Seleziona un genere</option>
+              <option value="SPARATUTTO">SPARATUTTO</option>
+              <option value="STRATEGICO">STRATEGICO</option>
+              <option value="AZIONE">AZIONE</option>
+              <option value="BROWSERGAME">BROWSERGAME</option>
+              <option value="ROUGELIKE">ROUGELIKE</option>
+              <option value="SOULSLIKE">SOULSLIKE</option>
+              <option value="GATCHA">GATCHA</option>
+              <option value="METROIDVANIA">METROIDVANIA</option>
+              <option value="OPENWORLD">OPENWORLD</option>
+              <option value="RETRO">RETRO</option>
+              <option value="PICCHIADURO">PICCHIADURO</option>
+              <option value="GIOCODIRUOLO">GIOCODIRUOLO</option>
+              <option value="TOWERDEFENSE">TOWERDEFENSE</option>
+              <option value="ZOMBIE">ZOMBIE</option>
+              <option value="MUSICALGAME">MUSICALGAME</option>
+              <option value="SPORTIVO">SPORTIVO</option>
+              <option value="PARTYGAME">PARTYGAME</option>
+              <option value="BATTLEROYALE">BATTLEROYALE</option>
+              <option value="ENIGMI">ENIGMI</option>
+              <option value="DUNGEONCRAWLER">DUNGEONCRAWLER</option>
+              <option value="GESTIONALE">GESTIONALE</option>
+              <option value="HACKANDSLASH">HACKANDSLASH</option>
+              <option value="OPENWORLD">OPENWORLD</option>
+              <option value="PVP">PVP</option>
+              <option value="PVEVP">PVEVP</option>
+              <option value="AVVENTURAGRAFICA">AVVENTURAGRAFICA</option>
+              <option value="SANDBOX">SANDBOX</option>
+              <option value="PLATFORM">PLATFORM</option>
+              <option value="SIMULATORE">SIMULATORE</option>
+            </Form.Select>
           </Form.Group>
           <Button
             className="btn-light fw-bold"
