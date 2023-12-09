@@ -11,9 +11,9 @@ const CommentZone = () => {
         overflowY: "auto",
       }}
     >
-      {Array.from({ length: 12 }, () => Math.floor(Math.random() * 40)).map((comment) => {
+      {Array.from({ length: 12 }, () => Math.floor(Math.random() * 40)).map((comment, i) => {
         return (
-          <Container fluid className="d-flex my-4" style={{ borderBlock: "solid 3px #89C0F2" }}>
+          <Container fluid className="d-flex my-4" style={{ borderBlock: "solid 3px #89C0F2" }} key={`comment-${i}`}>
             <Row>
               <Col xs={2}>
                 <img
