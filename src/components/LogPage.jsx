@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { getUserToken } from "../redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInformation, getUserToken } from "../redux/action";
+import { useNavigate } from "react-router";
 
 const LogPage = () => {
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.token.content);
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -15,12 +18,18 @@ const LogPage = () => {
     e.preventDefault();
     if (user.userName !== "" || user.password !== "") {
       dispatch(getUserToken(user));
-      console.log(user);
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
     }
   };
+
+  useEffect(() => {
+    if (token !== null) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   return (
     <Container

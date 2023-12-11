@@ -15,7 +15,6 @@ const MyProfilePage = () => {
   const userId = useParams();
 
   useEffect(() => {
-    console.log(userId.id, token);
     if (myProfile === null) {
       navigate("/");
     }

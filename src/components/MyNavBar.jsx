@@ -1,7 +1,10 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import myProfile from "../redux/reducers/myProfile";
+import { useSelector } from "react-redux";
 
 const MyNavBar = () => {
+  const myProfile = useSelector((state) => state.myProfile.content);
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-dark text-light">
       <Container fluid className="text-light">
@@ -13,28 +16,36 @@ const MyNavBar = () => {
             width={"50px"}
           />
         </Link>
+        <p className="fw-bold fs-2 ms-2 mb-0">GAMES CENTER</p>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto d-flex">
-            <Link to="/profile/me" className="text-light text-decoration-none m-2 fw-bold">
-              Profilo
-            </Link>
-            <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
-              scrivi un'articolo
-            </Link>
-          </Nav>
-          <Nav>
-            <Button className="btn-primary rounded me-2">
-              <Link to="/register" className="text-light text-decoration-none m-2 fw-bold">
-                SIGN UP
-              </Link>
-            </Button>
-            <Button className="btn-info rounded">
-              <Link to="/log" className="text-light text-decoration-none m-2 fw-bold">
-                Log IN
-              </Link>
-            </Button>
-          </Nav>
+          {myProfile ? (
+            <>
+              {" "}
+              <Nav className="me-auto d-flex">
+                <Link to="/profile/me" className="text-light text-decoration-none m-2 fw-bold">
+                  Profilo
+                </Link>
+                <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
+                  scrivi un'articolo
+                </Link>
+              </Nav>
+              <p className="fw-bold fs-3 mb-0">BENVENUTO {myProfile.username} </p>
+            </>
+          ) : (
+            <Nav className="ms-auto">
+              <Button className="btn-primary rounded  me-2">
+                <Link to="/register" className="text-light text-decoration-none m-2 fw-bold">
+                  SIGN UP
+                </Link>
+              </Button>
+              <Button className="btn-info rounded">
+                <Link to="/log" className="text-light text-decoration-none m-2 fw-bold">
+                  Log IN
+                </Link>
+              </Button>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
