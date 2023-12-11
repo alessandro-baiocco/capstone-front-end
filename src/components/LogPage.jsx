@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { getUserToken } from "../redux/action";
 
 const LogPage = () => {
+  const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState({ userName: "", password: "" });
   const handleChange = (propertyName, propertyValue) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
-  const handleSubmit = (propertyName, propertyValue) => {
-    if (user.username !== "" || user.password !== "") {
-      //implementare logica da inviare al backend
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user.userName !== "" || user.password !== "") {
+      dispatch(getUserToken(user));
       console.log(user);
     } else {
       setErrorText("per favore compila i campi neccesari ");
@@ -45,7 +49,7 @@ const LogPage = () => {
                 type="text"
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
-                onChange={(e) => handleChange("username", e.target.value)}
+                onChange={(e) => handleChange("userName", e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -61,6 +65,9 @@ const LogPage = () => {
             <Button
               style={{
                 fontSize: "50px",
+              }}
+              onClick={(e) => {
+                handleSubmit(e);
               }}
             >
               ENTRA

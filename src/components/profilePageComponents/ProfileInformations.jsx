@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
 
-const ProfileInformations = () => {
+const ProfileInformations = (props) => {
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -44,35 +44,35 @@ const ProfileInformations = () => {
         className="text-light m-0 mb-4 fs-3 me-3"
         style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
       >
-        coso119
+        {props.me.username}
       </p>
       <p className="fw-bold text-light m-0 fs-3"> EMAIL</p>
       <p
         className="text-light m-0 mb-4 fs-3 me-3"
         style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
       >
-        MARIOQUELLOVERO@VERO.it
+        {props.me.email}
       </p>
       <p className="fw-bold text-light m-0 fs-3"> NOME</p>
       <p
         className="text-light m-0 mb-4 fs-3 me-3"
         style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
       >
-        MARIO
+        {props.me.nome}
       </p>
       <p className="fw-bold text-light m-0 fs-3"> COGNOME</p>
       <p
         className="text-light m-0 mb-4 fs-3 me-3"
         style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
       >
-        ROSSI
+        {props.me.cognome}
       </p>
-      <p className="fw-bold text-light m-0 fs-3"> PASSWORD</p>
+      <p className="fw-bold text-light m-0 fs-3"> RUOLO</p>
       <p
         className="text-light m-0 mb-4 fs-3 me-3"
         style={{ border: "solid 3px  #89C0F2", backgroundColor: "black", overflow: "auto" }}
       >
-        *********
+        {props.me.ruolo}
       </p>
 
       <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)} className="btn-close-white">

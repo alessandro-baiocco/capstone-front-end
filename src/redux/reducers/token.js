@@ -1,12 +1,12 @@
-import { GET_ME, REMOVE_ME } from "../action";
+import { GET_TOKEN, REMOVE_ME } from "../action";
 
 const initialState = {
   content: null,
 };
 
-const myProfile = (state = initialState, action) => {
+const token = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ME:
+    case GET_TOKEN:
       return {
         content: action.payload,
       };
@@ -19,4 +19,4 @@ const myProfile = (state = initialState, action) => {
   }
 };
 
-export default myProfile;
+export default token;

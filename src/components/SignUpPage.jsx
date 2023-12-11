@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/action";
 
 const SignUpPage = () => {
+  const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, setUser] = useState({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
+  const [user, setUser] = useState({ userName: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
   const handleChange = (propertyName, propertyValue) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (user.nome !== "" || user.cognome !== "" || user.username !== "" || user.password !== "" || user.email !== "") {
-      //implementare logica da inviare al backend
+    if (user.nome !== "" || user.cognome !== "" || user.userName !== "" || user.password !== "" || user.email !== "") {
+      dispatch(registerUser(user));
       console.log(user);
-      setUser({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
+      setUser({ userName: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
@@ -69,7 +72,7 @@ const SignUpPage = () => {
                 type="text"
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
-                onChange={(e) => handleChange("username", e.target.value)}
+                onChange={(e) => handleChange("userName", e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3">

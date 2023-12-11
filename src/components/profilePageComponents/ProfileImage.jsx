@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
 
-const ProfileImage = () => {
+const ProfileImage = (props) => {
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -36,7 +36,7 @@ const ProfileImage = () => {
       {" "}
       <p className="fs-2 text-light mb-0">IMMAGINE PROFILO</p>
       <Container className="p-0" style={{ position: "relative", width: "fit-content" }}>
-        <img src="https://picsum.photos/200" alt="my profile avatar" className="img-fluid" width={"400px"} />
+        <img src={props.image} alt="my profile avatar" className="img-fluid" width={"400px"} />
 
         <Button
           className="p-1 py-0"
