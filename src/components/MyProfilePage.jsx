@@ -4,13 +4,12 @@ import ProfileInformations from "./profilePageComponents/ProfileInformations";
 import ProfileDescription from "./profilePageComponents/ProfileDescription";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserInformation } from "../redux/action";
 import { useNavigate, useParams } from "react-router";
 
 const MyProfilePage = () => {
   const navigate = useNavigate();
   const myProfile = useSelector((state) => state.myProfile.content);
-  const token = useSelector((state) => state.token.content);
+
   const dispatch = useDispatch();
   const userId = useParams();
 

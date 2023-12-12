@@ -1,40 +1,38 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const MainPageCards = () => {
+const MainPageCards = (props) => {
   return (
     <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
       <Row>
-        {Array.from({ length: 12 }, () => Math.floor(Math.random() * 40)).map((card, i) => {
-          return (
-            <Col xs={12} md={4} lg={3} className="my-2" key={`card-${i}`}>
-              <div
-                className="card text-light text-center"
-                style={{ backgroundColor: "rgba(0,0,0,0.70)", borderRadius: "30px", overflow: "hidden" }}
-              >
-                <img
-                  src="https://cdn1.epicgames.com/offer/149849cfbf324cc2a3d42fc4e5c19f91/EGS_DOOM1993_idSoftwareNerveSoftware_S1_2560x1440-8ed1ba59ae7bc26ccbafca2e7d05792b"
-                  className="card-img-top"
-                  alt="title"
-                />
-                <div className="card-body p-0">
-                  <h5 className="card-title m-2" style={{ fontFamily: "Geostar Fill, serif" }}>
-                    Card title
-                  </h5>
-                  <hr className="text-light  border border-3 border-light opacity-100"></hr>
-                  <p className="card-text m-2">card genre</p>
+        {props.cards.content &&
+          props.cards.content.map((card, i) => {
+            return (
+              <Col xs={12} md={4} lg={3} className="my-2" key={`card-${i}`}>
+                <div
+                  className="card text-light text-center"
+                  style={{ backgroundColor: "rgba(0,0,0,0.70)", borderRadius: "30px", overflow: "hidden" }}
+                >
+                  <img src={card.cover} className="card-img-top" alt="title" />
+                  <div className="card-body p-0">
+                    <h5 className="card-title m-2" style={{ fontFamily: "Geostar Fill, serif" }}>
+                      {card.titolo}
+                    </h5>
+                    <hr className="text-light  border border-3 border-light opacity-100"></hr>
+                    <p className="card-text m-2"> {card.tema}</p>
+                    <hr className="text-light border border-3 border-light  opacity-100"></hr>
+                    <p className="card-text m-2">{card.description}</p>
+                  </div>
                   <hr className="text-light border border-3 border-light  opacity-100"></hr>
-                  <p className="card-text m-2">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                  </p>
+                  <div className="card-body d-flex justify-content-center pb-2 p-0 ">
+                    <Link to={`/article/${card.blogArticle.id}`}>
+                      <Button className="btn btn-primary">leggi</Button>
+                    </Link>
+                  </div>
                 </div>
-                <hr className="text-light border border-3 border-light  opacity-100"></hr>
-                <div className="card-body d-flex justify-content-center pb-2 p-0 ">
-                  <Button className="btn btn-primary">Go somewhere</Button>
-                </div>
-              </div>
-            </Col>
-          );
-        })}
+              </Col>
+            );
+          })}
       </Row>
     </Container>
   );

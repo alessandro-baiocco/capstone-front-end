@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/action";
+import { useNavigate } from "react-router";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.token.content);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [user, setUser] = useState({ userName: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
@@ -21,6 +24,12 @@ const SignUpPage = () => {
       setError(true);
     }
   };
+  useEffect(() => {
+    if (token !== null) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   return (
     <Container

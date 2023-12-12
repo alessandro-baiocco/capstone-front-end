@@ -3,14 +3,16 @@ import HeroHome from "./homepageComponents/HeroHome";
 import MainPageCards from "./homepageComponents/MainPageCards";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInformation } from "../redux/action";
+import { getAllCards, getUserInformation } from "../redux/action";
 import { useEffect } from "react";
 
 const MyHome = () => {
   const dispatch = useDispatch();
+  const cards = useSelector((state) => state.cards?.content);
   const myProfile = useSelector((state) => state.myProfile.content);
   const token = useSelector((state) => state.token.content);
   useEffect(() => {
+    dispatch(getAllCards());
     if (token !== null && myProfile === null) {
       dispatch(getUserInformation("me", token));
     }
@@ -28,7 +30,7 @@ const MyHome = () => {
         className="p-5"
       >
         <HeroHome></HeroHome>
-        <MainPageCards></MainPageCards>
+        <MainPageCards cards={cards}></MainPageCards>
       </Container>
     </>
   );

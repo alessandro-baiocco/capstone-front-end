@@ -2,7 +2,10 @@ export const GET_CLIENTS = "GET_CLIENTS";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_ME = "GET_ME";
 export const REMOVE_ME = "REMOVE_ME";
+export const GET_CARDS = "GET_CARDS";
+export const REMOVE_CARDS = "REMOVE_CARDS";
 
+//----------------user
 export const registerUser = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -65,6 +68,26 @@ export const getUserInformation = (userId, token) => {
         let me = await resp.json();
         console.log(me);
         dispatch({ type: GET_ME, payload: me });
+      } else {
+        console.log("error");
+        alert("username o password sbagliati!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("username o password sbagliati!");
+    }
+  };
+};
+
+//--------------------------cards--------------------
+
+export const getAllCards = () => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/public/content/cards");
+      if (resp.ok) {
+        let cards = await resp.json();
+        dispatch({ type: GET_CARDS, payload: cards });
       } else {
         console.log("error");
         alert("username o password sbagliati!");
