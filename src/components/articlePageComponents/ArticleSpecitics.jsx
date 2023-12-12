@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 
-const ArticleSpecitics = () => {
+const ArticleSpecitics = (props) => {
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -38,31 +38,38 @@ const ArticleSpecitics = () => {
           <Col xs={5} className="text-light p-0">
             <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
               <p className="text-center mb-0 fw-bold fs-4">TITOLO:</p>
-              <p className="fs-4 m-0">Doom</p>
+              <p className="fs-4 m-0">{props.article.titolo}</p>
             </Container>
             <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
               <p className="text-center mb-0 fw-bold fs-4">SVILUPPATORE:</p>
-              <p className="fs-4 m-0">ID SOFTWARE</p>
+              <p className="fs-4 m-0">{props.article.svillupatore}</p>
             </Container>
             <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
               <p className="text-center mb-0 fw-bold fs-4">PUBBLICAZIONE:</p>
-              <p className="fs-4 m-0">ID SOFTWARE</p>
+              <p className="fs-4 m-0">{props.article.pubblicazione}</p>
             </Container>
             <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
               <p className="text-center mb-0 fw-bold fs-4">TEMA:</p>
-              <p className="fs-4 m-0">FANTASCIENTIFICO</p>
+              <p className="fs-4 m-0">{props.article.tema}</p>
             </Container>
             <Container className="p-0 px-3">
               <p className="text-center mb-0 fw-bold fs-4">GENERE:</p>
-              <p className="fs-4 m-0">SPARATUTTO , RETRO , OLD SCHOOL</p>
+              <ul className="p-0" style={{ listStyle: "none" }}>
+                {props.article.genresList.map((genre, i) => (
+                  <li className="fs-4 m-0" key={`list-item-${i}`}>
+                    {genre}
+                  </li>
+                ))}
+              </ul>
             </Container>
           </Col>
           <Col xs={7} className="p-0" style={{ minHeight: "400px", position: "relative" }}>
             <img
-              src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_DOOM1993_image1600w.jpg"
+              src={props.article.immaginePrimaria}
               alt="cover"
               height={"100%"}
               width={"100%"}
+              style={{ objectFit: "cover" }}
             />
             <Button
               className="p-1 py-0"

@@ -5,8 +5,8 @@ const MainPageCards = (props) => {
   return (
     <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
       <Row>
-        {props.cards.content &&
-          props.cards.content.map((card, i) => {
+        {props.cards?.content &&
+          props.cards?.content.map((card, i) => {
             return (
               <Col xs={12} md={4} lg={3} className="my-2" key={`card-${i}`}>
                 <div

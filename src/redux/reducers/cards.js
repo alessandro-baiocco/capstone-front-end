@@ -1,7 +1,7 @@
 import { GET_CARDS, REMOVE_CARDS } from "../action";
 
 const initialState = {
-  content: null,
+  content: [],
 };
 
 const cards = (state = initialState, action) => {

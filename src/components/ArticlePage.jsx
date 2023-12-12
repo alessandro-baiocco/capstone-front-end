@@ -5,9 +5,16 @@ import ArticleSpecitics from "./articlePageComponents/ArticleSpecitics";
 import ArticleEsperience from "./articlePageComponents/ArticleEsperience";
 import ArticleSuggestion from "./articlePageComponents/ArticleSuggestion";
 import CommentZone from "./articlePageComponents/CommentZone";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getArticle } from "../redux/action";
+import { useParams } from "react-router";
 
 const ArticlePage = () => {
+  const fetchedArticle = useSelector((state) => state.article.content);
+  const myProfile = useSelector((state) => state.myProfile.content);
+  const param = useParams();
+  const dispatch = useDispatch();
   //compilazione campi
   const [remove, setRemove] = useState("");
   const [error, setError] = useState(false);
@@ -69,51 +76,61 @@ const ArticlePage = () => {
     setShow(true);
   }
 
-  //-------------------------
+  //-----------------------------------
+  useEffect(() => {
+    dispatch(getArticle(param.id));
+  }, []);
+
+  //--------------------------------------------
   return (
     <>
-      <Container
-        fluid
-        style={{
-          backgroundImage:
-            "url(https://as2.ftcdn.net/v2/jpg/05/91/90/95/1000_F_591909533_UfNjf5M9QS1DgegeIgN60pTTIQyUUYqG.jpg)",
-          objectFit: "cover",
-        }}
-        className="p-5"
-      >
-        <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
-          <Row>
-            <Col xs={12} style={{ borderBottom: "solid 3px #89C0F2" }} className="p-0">
-              <ArticleCover></ArticleCover>
-            </Col>
-            <Col xs={12} md={6} style={{ borderRight: "solid 3px #89C0F2" }} className="p-0">
-              <ArticleStory></ArticleStory>
-            </Col>
-            <Col xs={12} md={6} className="p-0">
-              <ArticleSpecitics></ArticleSpecitics>
-            </Col>
-            <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2" }}>
-              <ArticleEsperience></ArticleEsperience>
-            </Col>
-            <Col xs={12} className="p-0">
-              <ArticleSuggestion></ArticleSuggestion>
-            </Col>
-            <Col xs={12} className="p-0 d-flex" style={{ borderTop: "solid 3px #89C0F2" }}>
-              <Container className=" d-flex">
-                <p className="text-light p-1 me-auto my-0">
-                  <strong className="fw-bold">AUTORE ARTICOLO :</strong> mario rossi
-                </p>
-                <Button className="btn-primary fw-bold mx-2" onClick={() => handleShow(true)}>
-                  Modifica articolo
-                </Button>
-                <Button className="btn-danger fw-bold">elimina articolo</Button>
-              </Container>
-            </Col>
-          </Row>
-        </Container>
+      {fetchedArticle.titolo && (
+        <Container
+          fluid
+          style={{
+            backgroundImage:
+              "url(https://as2.ftcdn.net/v2/jpg/05/91/90/95/1000_F_591909533_UfNjf5M9QS1DgegeIgN60pTTIQyUUYqG.jpg)",
+            objectFit: "cover",
+          }}
+          className="p-5"
+        >
+          <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
+            <Row>
+              <Col xs={12} style={{ borderBottom: "solid 3px #89C0F2" }} className="p-0">
+                <ArticleCover image={fetchedArticle.immagineSecondaria}></ArticleCover>
+              </Col>
+              <Col xs={12} md={6} style={{ borderRight: "solid 3px #89C0F2" }} className="p-0">
+                <ArticleStory storia={fetchedArticle.storia}></ArticleStory>
+              </Col>
+              <Col xs={12} md={6} className="p-0">
+                <ArticleSpecitics article={fetchedArticle}></ArticleSpecitics>
+              </Col>
+              <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2" }}>
+                <ArticleEsperience esperienza={fetchedArticle.esperienza}></ArticleEsperience>
+              </Col>
+              <Col xs={12} className="p-0">
+                <ArticleSuggestion consigli={fetchedArticle.consigli}></ArticleSuggestion>
+              </Col>
+              <Col xs={12} className="p-0 d-flex" style={{ borderTop: "solid 3px #89C0F2" }}>
+                <Container className=" d-flex">
+                  <p className="text-light p-1 me-auto my-0">
+                    <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
+                    {fetchedArticle.user.nome + " " + fetchedArticle.user.cognome}
+                  </p>
+                  <Button className="btn-primary fw-bold mx-2" onClick={() => handleShow(true)}>
+                    Modifica articolo
+                  </Button>
+                  <Button className="btn-danger fw-bold">elimina articolo</Button>
+                </Container>
+              </Col>
+            </Row>
+          </Container>
 
-        <CommentZone></CommentZone>
-      </Container>
+          {myProfile !== null && (
+            <CommentZone comments={fetchedArticle.comments} articleid={fetchedArticle.id}></CommentZone>
+          )}
+        </Container>
+      )}
 
       {/* --------------modal----------------- */}
       <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)} className="btn-close-white">

@@ -6,11 +6,15 @@ import persistStore from "redux-persist/es/persistStore";
 import myProfile from "../reducers/myProfile";
 import token from "../reducers/token";
 import cards from "../reducers/cards";
+import article from "../reducers/article";
+import comments from "../reducers/comments";
 
 const rootReducer = combineReducers({
   myProfile: myProfile,
   token: token,
   cards: cards,
+  article: article,
+  comments: comments,
 });
 
 const persistConfig = { key: "root", storage };

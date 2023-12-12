@@ -3,7 +3,10 @@ export const GET_TOKEN = "GET_TOKEN";
 export const GET_ME = "GET_ME";
 export const REMOVE_ME = "REMOVE_ME";
 export const GET_CARDS = "GET_CARDS";
+export const GET_ARTICLE = "GET_ARTICLE";
 export const REMOVE_CARDS = "REMOVE_CARDS";
+export const POST_COMMENT = "POST_COMMENT";
+export const GET_COMMENTS = "GET_COMMENTS";
 
 //----------------user
 export const registerUser = (data) => {
@@ -90,11 +93,59 @@ export const getAllCards = () => {
         dispatch({ type: GET_CARDS, payload: cards });
       } else {
         console.log("error");
-        alert("username o password sbagliati!");
+        alert("errore nel reperimento dati!");
       }
     } catch (error) {
       console.log(error);
-      alert("username o password sbagliati!");
+      alert("errore nel reperimento dati!");
+    }
+  };
+};
+
+//---------------------article------------------
+
+export const getArticle = (articleId) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/public/content/articles/" + articleId);
+      if (resp.ok) {
+        let article = await resp.json();
+        dispatch({ type: GET_ARTICLE, payload: article });
+        dispatch({ type: GET_COMMENTS, payload: article.comments });
+      } else {
+        console.log("error");
+        alert("errore nel reperimento dati!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel reperimento dati!");
+    }
+  };
+};
+
+//----------------------comment---------------
+
+export const postComment = (comment, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/comments", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+      });
+      if (resp.ok) {
+        let myComment = await resp.json();
+        dispatch({ type: POST_COMMENT, payload: myComment });
+      } else {
+        console.log("error");
+        alert("errore nel post!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel post!");
     }
   };
 };
