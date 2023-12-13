@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { changeCoverArticle } from "../../redux/action";
 
 const ArticleCover = (props) => {
+  const dispatch = useDispatch();
   //modal
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -16,11 +19,14 @@ const ArticleCover = (props) => {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const handleSubmit = () => {
     if (image !== null) {
+      dispatch(changeCoverArticle(props.token, image, props.id));
       //implementare logica da inviare al backend
       console.log(image);
       setImage(null);
+      setPreview(null);
     } else {
       setErrorText("per favore inserisci un'immagine ");
       setError(true);
@@ -28,7 +34,8 @@ const ArticleCover = (props) => {
   };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
+      setImage(event.target.files[0]);
+      setPreview(URL.createObjectURL(event.target.files[0]));
     }
   };
   return (
@@ -97,7 +104,7 @@ const ArticleCover = (props) => {
               {image && (
                 <img
                   alt="preview"
-                  src={image}
+                  src={preview}
                   className="img-fluid my-2"
                   style={{
                     border: "solid 3px  white",

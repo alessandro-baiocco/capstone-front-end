@@ -12,6 +12,7 @@ import { useParams } from "react-router";
 
 const ArticlePage = () => {
   const fetchedArticle = useSelector((state) => state.article.content);
+  const token = useSelector((state) => state.token.content);
   const myProfile = useSelector((state) => state.myProfile.content);
   const param = useParams();
   const dispatch = useDispatch();
@@ -98,13 +99,17 @@ const ArticlePage = () => {
           <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
             <Row>
               <Col xs={12} style={{ borderBottom: "solid 3px #89C0F2" }} className="p-0">
-                <ArticleCover image={fetchedArticle.immagineSecondaria}></ArticleCover>
+                <ArticleCover
+                  image={fetchedArticle.immagineSecondaria}
+                  id={fetchedArticle.id}
+                  token={token}
+                ></ArticleCover>
               </Col>
               <Col xs={12} md={6} style={{ borderRight: "solid 3px #89C0F2" }} className="p-0">
                 <ArticleStory storia={fetchedArticle.storia}></ArticleStory>
               </Col>
               <Col xs={12} md={6} className="p-0">
-                <ArticleSpecitics article={fetchedArticle}></ArticleSpecitics>
+                <ArticleSpecitics article={fetchedArticle} token={token}></ArticleSpecitics>
               </Col>
               <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2" }}>
                 <ArticleEsperience esperienza={fetchedArticle.esperienza}></ArticleEsperience>

@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { changeimageArticle } from "../../redux/action";
 
 const ArticleSpecitics = (props) => {
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [image, setImage] = useState(null);
+  const dispatch = useDispatch();
+  const [preview, setPreview] = useState(null);
   const handleSubmit = () => {
     if (image !== null) {
+      dispatch(changeimageArticle(props.token, image, props.article.id));
       //implementare logica da inviare al backend
       console.log(image);
       setImage(null);
+      setPreview(null);
     } else {
       setErrorText("per favore inserisci un'immagine ");
       setError(true);
@@ -18,7 +24,8 @@ const ArticleSpecitics = (props) => {
   };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
+      setImage(event.target.files[0]);
+      setPreview(URL.createObjectURL(event.target.files[0]));
     }
   };
 
@@ -129,7 +136,7 @@ const ArticleSpecitics = (props) => {
               {image && (
                 <img
                   alt="preview"
-                  src={image}
+                  src={preview}
                   className="img-fluid my-2"
                   style={{
                     border: "solid 3px  white",

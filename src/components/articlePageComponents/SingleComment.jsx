@@ -28,8 +28,8 @@ const SingleComment = (props) => {
             <img src={props.comment.user?.avatar} alt="profile-avatar" width={"100%"} height={"100%"} />
           </Col>
           <Col xs={8}>
-            <p className="fs-2 text-light fw-bold">{props.comment.user?.username}</p>
-            <p className="fs-2 text-light">{props.comment.comment}</p>
+            <p className="fs-2 text-light fw-bold mb-0">@{props.comment.user?.username}</p>
+            <p className="fs-3 text-light">{props.comment.comment}</p>
           </Col>
 
           <Col xs={2}>

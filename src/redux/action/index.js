@@ -171,6 +171,44 @@ export const getArticle = (articleId) => {
   };
 };
 
+export const changeCoverArticle = (token, coverImg, id) => {
+  return async (dispatch, getState) => {
+    const formData = new FormData();
+    formData.append("picture", coverImg);
+    console.log(formData);
+    const response = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
+      method: "PATCH",
+      body: formData,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (response.ok) {
+      const article = await response.json();
+      dispatch({ type: GET_ARTICLE, payload: article });
+    }
+  };
+};
+
+export const changeimageArticle = (token, coverImg, id) => {
+  return async (dispatch, getState) => {
+    const formData = new FormData();
+    formData.append("picture", coverImg);
+    console.log(formData);
+    const response = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
+      method: "PATCH",
+      body: formData,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (response.ok) {
+      const article = await response.json();
+      dispatch({ type: GET_ARTICLE, payload: article });
+    }
+  };
+};
+
 //----------------------comment---------------
 
 export const postComment = (comment, token) => {
