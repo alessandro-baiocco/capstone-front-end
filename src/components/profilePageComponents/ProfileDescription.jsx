@@ -11,7 +11,7 @@ const ProfileDescription = (props) => {
       </Container>
       <p className="text-light fs-2">
         <span className="fw-bold text-light fs-2 ps-2">Genere preferito</span> :{" "}
-        {props.me.genere ? props.me.genere : "nessun genere preferito"}
+        {props.me.generePreferito ? props.me.generePreferito : "nessun genere preferito"}
       </p>
     </>
   );

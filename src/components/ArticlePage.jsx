@@ -79,6 +79,7 @@ const ArticlePage = () => {
   //-----------------------------------
   useEffect(() => {
     dispatch(getArticle(param.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //--------------------------------------------

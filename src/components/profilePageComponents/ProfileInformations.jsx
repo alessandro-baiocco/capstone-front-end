@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { putUserProfile } from "../../redux/action";
 
 const ProfileInformations = (props) => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token.content);
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, setUser] = useState({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
+  const [user, setUser] = useState(props.me);
   const handleChange = (propertyName, propertyValue) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (user.nome !== "" || user.cognome !== "" || user.username !== "" || user.password !== "" || user.email !== "") {
-      //implementare logica da inviare al backend
+    if (user.nome !== "" && user.cognome !== "" && user.username !== "" && user.password !== "" && user.email !== "") {
+      dispatch(putUserProfile(user, token));
       console.log(user);
-      setUser({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
@@ -89,6 +92,7 @@ const ProfileInformations = (props) => {
           <Form.Group className="mb-3">
             <Form.Label className="fw-bold">USERNAME*</Form.Label>
             <Form.Control
+              value={user.username}
               type="text"
               size="lg"
               style={{ border: "solid 3px  #89C0F2" }}
@@ -98,6 +102,7 @@ const ProfileInformations = (props) => {
           <Form.Group className="mb-3">
             <Form.Label className="fw-bold">EMAIL*</Form.Label>
             <Form.Control
+              value={user.email}
               type="email"
               size="lg"
               style={{ border: "solid 3px  #89C0F2" }}
@@ -107,6 +112,7 @@ const ProfileInformations = (props) => {
           <Form.Group className="mb-3">
             <Form.Label className="fw-bold">NOME*</Form.Label>
             <Form.Control
+              value={user.nome}
               type="text"
               size="lg"
               style={{ border: "solid 3px  #89C0F2" }}
@@ -116,6 +122,7 @@ const ProfileInformations = (props) => {
           <Form.Group className="mb-3">
             <Form.Label className="fw-bold">COGNOME*</Form.Label>
             <Form.Control
+              value={user.cognome}
               type="text"
               size="lg"
               style={{ border: "solid 3px  #89C0F2" }}
@@ -123,27 +130,22 @@ const ProfileInformations = (props) => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label className="fw-bold">PASSWORD*</Form.Label>
-            <Form.Control
-              type="password"
-              size="lg"
-              style={{ border: "solid 3px  #89C0F2" }}
-              onChange={(e) => handleChange("password", e.target.value)}
-            />
             <Form.Label className="fw-bold mt-2">NOTE PERSONALI</Form.Label>
             <Form.Control
+              value={user.notePersonali}
               as="textarea"
               style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
-              onChange={(e) => handleChange("notePersonali", e.target.value)}
+              onChange={(e) => handleChange("descrizione", e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label className="fw-bold">GENERE</Form.Label>
 
             <Form.Select
+              value={user.generePreferito ? user.generePreferito : ""}
               aria-label="Default select example"
               onChange={(e) => {
-                handleChange("genere", e.target.value);
+                handleChange("generePreferito", e.target.value);
               }}
               style={{ border: "solid 3px  #89C0F2" }}
               size="lg"

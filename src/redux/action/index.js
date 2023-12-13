@@ -1,3 +1,5 @@
+import { json } from "react-router-dom";
+
 export const GET_CLIENTS = "GET_CLIENTS";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_ME = "GET_ME";
@@ -7,6 +9,8 @@ export const GET_ARTICLE = "GET_ARTICLE";
 export const REMOVE_CARDS = "REMOVE_CARDS";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENTS = "GET_COMMENTS";
+export const PUT_COMMENT = "PUT_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
 
 //----------------user
 export const registerUser = (data) => {
@@ -82,6 +86,50 @@ export const getUserInformation = (userId, token) => {
   };
 };
 
+export const putUserProfile = (body, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/users/" + body.id, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (resp.ok) {
+        let user = await resp.json();
+        dispatch({ type: GET_ME, payload: user });
+      } else {
+        console.log("error");
+        alert("errore nel post!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel post!");
+    }
+  };
+};
+
+export const changeProfileImage = (token, profileImg) => {
+  return async (dispatch, getState) => {
+    const formData = new FormData();
+    formData.append("avatar", profileImg);
+    console.log(formData);
+    const response = await fetch("http://localhost:8080/private/users/me/upload", {
+      method: "PATCH",
+      body: formData,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (response.ok) {
+      const me = await response.json();
+      dispatch({ type: GET_ME, payload: me });
+    }
+  };
+};
+
 //--------------------------cards--------------------
 
 export const getAllCards = () => {
@@ -139,6 +187,53 @@ export const postComment = (comment, token) => {
       if (resp.ok) {
         let myComment = await resp.json();
         dispatch({ type: POST_COMMENT, payload: myComment });
+      } else {
+        console.log("error");
+        alert("errore nel post!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel post!");
+    }
+  };
+};
+
+export const deleteComment = (id, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/comments/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        dispatch({ type: DELETE_COMMENT, payload: id });
+      } else {
+        console.log("error");
+        alert("errore nel post!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel post!");
+    }
+  };
+};
+
+export const changeComment = (body, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/comments/" + body.id, {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      if (resp.ok) {
+        const putComment = resp.json();
+        dispatch({ type: PUT_COMMENT, payload: putComment });
       } else {
         console.log("error");
         alert("errore nel post!");

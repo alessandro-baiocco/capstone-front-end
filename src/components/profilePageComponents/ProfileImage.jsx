@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfileImage } from "../../redux/action";
 
 const ProfileImage = (props) => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token.content);
+  const myProfile = useSelector((state) => state.myProfile.content);
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const handleSubmit = () => {
     if (image !== null) {
-      //implementare logica da inviare al backend
+      dispatch(changeProfileImage(token, image));
       console.log(image);
       setImage(null);
     } else {
@@ -18,7 +24,8 @@ const ProfileImage = (props) => {
   };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
+      setImage(event.target.files[0]);
+      setPreview(URL.createObjectURL(event.target.files[0]));
     }
   };
 
@@ -91,10 +98,10 @@ const ProfileImage = (props) => {
               className="text-dark"
             />
             <Container className="notFilter my-2">
-              {image && (
+              {preview && (
                 <img
                   alt="preview"
-                  src={image}
+                  src={preview}
                   className="img-fluid my-2"
                   style={{
                     border: "solid 3px  white",
