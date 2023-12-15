@@ -16,6 +16,7 @@ const MyHome = () => {
     if (token !== null && myProfile === null) {
       dispatch(getUserInformation("me", token));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

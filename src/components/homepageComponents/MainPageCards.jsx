@@ -13,7 +13,12 @@ const MainPageCards = (props) => {
                   className="card text-light text-center"
                   style={{ backgroundColor: "rgba(0,0,0,0.70)", borderRadius: "30px", overflow: "hidden" }}
                 >
-                  <img src={card.cover} className="card-img-top" alt="title" />
+                  <img
+                    src={card.cover}
+                    className="card-img-top"
+                    alt="title"
+                    style={{ height: "382px", objectFit: "cover" }}
+                  />
                   <div className="card-body p-0">
                     <h5 className="card-title m-2" style={{ fontFamily: "Geostar Fill, serif" }}>
                       {card.titolo}

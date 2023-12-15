@@ -7,7 +7,7 @@ import ArticleSuggestion from "./articlePageComponents/ArticleSuggestion";
 import CommentZone from "./articlePageComponents/CommentZone";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteArticle, getArticle } from "../redux/action";
+import { deleteArticle, getArticle, putArticle } from "../redux/action";
 import { useParams, useNavigate } from "react-router";
 
 const ArticlePage = () => {
@@ -52,7 +52,7 @@ const ArticlePage = () => {
       article.esperienza !== "" &&
       article.consigli !== ""
     ) {
-      //implementare logica da inviare al backend
+      dispatch(putArticle(fetchedArticle.id, article, token));
       console.log(article);
     } else {
       setErrorText("per favore compila i campi neccesari ");
@@ -122,7 +122,13 @@ const ArticlePage = () => {
                     <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
                     {fetchedArticle?.user.nome + " " + fetchedArticle?.user.cognome}
                   </p>
-                  <Button className="btn-primary fw-bold mx-sm-2" onClick={() => handleShow(true)}>
+                  <Button
+                    className="btn-primary fw-bold mx-sm-2"
+                    onClick={() => {
+                      handleShow(true);
+                      setArticle(fetchedArticle);
+                    }}
+                  >
                     Modifica articolo
                   </Button>
                   <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>

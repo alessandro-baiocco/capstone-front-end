@@ -14,6 +14,8 @@ export const LOADING_FALSE = "LOADING_FALSE";
 export const LOADING_TRUE = "LOADING_TRUE";
 export const ERROR_FALSE = "ERROR_FALSE";
 export const ERROR_TRUE = "ERROR_TRUE";
+export const SUCCESS_FALSE = "SUCCESS_FALSE";
+export const SUCCESS_TRUE = "SUCCESS_TRUE";
 
 //----------------user
 export const registerUser = (data) => {
@@ -171,6 +173,56 @@ export const getArticle = (articleId) => {
         let article = await resp.json();
         dispatch({ type: GET_ARTICLE, payload: article });
         dispatch({ type: GET_COMMENTS, payload: article.comments });
+      } else {
+        console.log("error");
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
+
+export const postArticle = (body, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/articles", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (resp.ok) {
+      } else {
+        console.log("error");
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
+
+export const putArticle = (articleId, body, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (resp.ok) {
+        let article = await resp.json();
+        dispatch({ type: GET_ARTICLE, payload: article });
       } else {
         console.log("error");
         dispatch({ type: ERROR_TRUE, payload: resp.text });

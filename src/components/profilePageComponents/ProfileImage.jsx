@@ -15,8 +15,9 @@ const ProfileImage = (props) => {
   const handleSubmit = () => {
     if (image !== null) {
       dispatch(changeProfileImage(token, image));
-      console.log(image);
+      setShow(false);
       setImage(null);
+      setPreview(null);
     } else {
       setErrorText("per favore inserisci un'immagine ");
       setError(true);

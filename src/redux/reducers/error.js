@@ -1,9 +1,10 @@
-import { ERROR_TRUE, ERROR_FALSE, LOADING_TRUE, LOADING_FALSE } from "../action";
+import { SUCCESS_TRUE, SUCCESS_FALSE, ERROR_TRUE, ERROR_FALSE, LOADING_TRUE, LOADING_FALSE } from "../action";
 
 const initialState = {
   error: false,
   errorText: "",
   loading: false,
+  success: false,
 };
 
 const loading = (state = initialState, action) => {
@@ -19,6 +20,16 @@ const loading = (state = initialState, action) => {
         ...state,
         error: false,
         errorText: "",
+      };
+    case SUCCESS_TRUE:
+      return {
+        ...state,
+        error: true,
+      };
+    case SUCCESS_FALSE:
+      return {
+        ...state,
+        error: false,
       };
     case LOADING_TRUE:
       return {

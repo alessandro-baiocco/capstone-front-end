@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { postArticle } from "../redux/action";
 
 const PostArticlePage = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token.content);
   //compilazione campi
   const [remove, setRemove] = useState("");
   const [error, setError] = useState(false);
@@ -48,7 +52,7 @@ const PostArticlePage = () => {
       article.consigli !== "" &&
       article.descrizione !== ""
     ) {
-      //implementare logica da inviare al backend
+      dispatch(postArticle(article, token));
       console.log(article);
       setArticle({
         titolo: "",

@@ -23,8 +23,7 @@ const ArticleCover = (props) => {
   const handleSubmit = () => {
     if (image !== null) {
       dispatch(changeCoverArticle(props.token, image, props.id));
-      //implementare logica da inviare al backend
-      console.log(image);
+      setShow(false);
       setImage(null);
       setPreview(null);
     } else {
