@@ -1,16 +1,19 @@
-import { json } from "react-router-dom";
-
 export const GET_CLIENTS = "GET_CLIENTS";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_ME = "GET_ME";
 export const REMOVE_ME = "REMOVE_ME";
 export const GET_CARDS = "GET_CARDS";
 export const GET_ARTICLE = "GET_ARTICLE";
+export const DELETE_ARTICLE = "DELETE_ARTICLE";
 export const REMOVE_CARDS = "REMOVE_CARDS";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENTS = "GET_COMMENTS";
 export const PUT_COMMENT = "PUT_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const LOADING_FALSE = "LOADING_FALSE";
+export const LOADING_TRUE = "LOADING_TRUE";
+export const ERROR_FALSE = "ERROR_FALSE";
+export const ERROR_TRUE = "ERROR_TRUE";
 
 //----------------user
 export const registerUser = (data) => {
@@ -32,8 +35,10 @@ export const registerUser = (data) => {
       } else {
         console.log(resp);
       }
-    } catch {
-      console.log("errore nella registrazione");
+    } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -57,8 +62,9 @@ export const getUserToken = (user) => {
         alert("username o password sbagliati!");
       }
     } catch (error) {
-      console.log(error);
-      alert("username o password sbagliati!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -80,8 +86,9 @@ export const getUserInformation = (userId, token) => {
         alert("username o password sbagliati!");
       }
     } catch (error) {
-      console.log(error);
-      alert("username o password sbagliati!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -105,8 +112,9 @@ export const putUserProfile = (body, token) => {
         alert("errore nel post!");
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel post!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -135,17 +143,20 @@ export const changeProfileImage = (token, profileImg) => {
 export const getAllCards = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: LOADING_TRUE, payload: true });
       let resp = await fetch("http://localhost:8080/public/content/cards");
       if (resp.ok) {
         let cards = await resp.json();
         dispatch({ type: GET_CARDS, payload: cards });
       } else {
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
         console.log("error");
-        alert("errore nel reperimento dati!");
       }
     } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
       console.log(error);
-      alert("errore nel reperimento dati!");
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -162,49 +173,88 @@ export const getArticle = (articleId) => {
         dispatch({ type: GET_COMMENTS, payload: article.comments });
       } else {
         console.log("error");
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
+
+export const deleteArticle = (articleId, token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        dispatch({ type: DELETE_ARTICLE, payload: null });
+      } else {
+        console.log("error");
         alert("errore nel reperimento dati!");
       }
     } catch (error) {
       console.log(error);
       alert("errore nel reperimento dati!");
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
 
+// ---------------------article images-------------------------------
+
 export const changeCoverArticle = (token, coverImg, id) => {
   return async (dispatch, getState) => {
-    const formData = new FormData();
-    formData.append("picture", coverImg);
-    console.log(formData);
-    const response = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
-      method: "PATCH",
-      body: formData,
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    if (response.ok) {
-      const article = await response.json();
-      dispatch({ type: GET_ARTICLE, payload: article });
+    try {
+      const formData = new FormData();
+      formData.append("picture", coverImg);
+      console.log(formData);
+      const response = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (response.ok) {
+        const article = await response.json();
+        dispatch({ type: GET_ARTICLE, payload: article });
+      }
+    } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
 
 export const changeimageArticle = (token, coverImg, id) => {
   return async (dispatch, getState) => {
-    const formData = new FormData();
-    formData.append("picture", coverImg);
-    console.log(formData);
-    const response = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
-      method: "PATCH",
-      body: formData,
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    if (response.ok) {
-      const article = await response.json();
-      dispatch({ type: GET_ARTICLE, payload: article });
+    try {
+      const formData = new FormData();
+      formData.append("picture", coverImg);
+      console.log(formData);
+      const response = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (response.ok) {
+        const article = await response.json();
+        dispatch({ type: GET_ARTICLE, payload: article });
+      }
+    } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -230,8 +280,9 @@ export const postComment = (comment, token) => {
         alert("errore nel post!");
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel post!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -252,8 +303,9 @@ export const deleteComment = (id, token) => {
         alert("errore nel post!");
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel post!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -277,8 +329,9 @@ export const changeComment = (body, token) => {
         alert("errore nel post!");
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel post!");
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };

@@ -42,20 +42,28 @@ const ArticleSpecitics = (props) => {
     <>
       <Container>
         <Row>
-          <Col xs={5} className="text-light p-0">
-            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
-              <p className="text-center mb-0 fw-bold fs-4">TITOLO:</p>
+          <Col xs={12} sm={7} lg={5} className="text-light p-0 borderRightToBottomSM">
+            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2", overflow: "auto" }}>
+              <p
+                className="text-center mb-0 fw-bold fs-4"
+                style={{
+                  wordWrap: "break-word",
+                  lineHeight: "1.6rem",
+                }}
+              >
+                TITOLO:
+              </p>
               <p className="fs-4 m-0">{props.article.titolo}</p>
             </Container>
-            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
+            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2", overflow: "auto" }}>
               <p className="text-center mb-0 fw-bold fs-4">SVILUPPATORE:</p>
               <p className="fs-4 m-0">{props.article.svillupatore}</p>
             </Container>
-            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
+            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2", overflow: "auto" }}>
               <p className="text-center mb-0 fw-bold fs-4">PUBBLICAZIONE:</p>
               <p className="fs-4 m-0">{props.article.pubblicazione}</p>
             </Container>
-            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2" }}>
+            <Container className="p-0 px-3" style={{ borderBottom: "solid 3px #89C0F2", overflow: "auto" }}>
               <p className="text-center mb-0 fw-bold fs-4">TEMA:</p>
               <p className="fs-4 m-0">{props.article.tema}</p>
             </Container>
@@ -70,7 +78,7 @@ const ArticleSpecitics = (props) => {
               </ul>
             </Container>
           </Col>
-          <Col xs={7} className="p-0" style={{ minHeight: "400px", position: "relative" }}>
+          <Col xs={12} sm={5} lg={7} className="p-0" style={{ minHeight: "400px", position: "relative" }}>
             <img
               src={props.article.immaginePrimaria}
               alt="cover"

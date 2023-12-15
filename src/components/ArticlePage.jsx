@@ -7,8 +7,8 @@ import ArticleSuggestion from "./articlePageComponents/ArticleSuggestion";
 import CommentZone from "./articlePageComponents/CommentZone";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getArticle } from "../redux/action";
-import { useParams } from "react-router";
+import { deleteArticle, getArticle } from "../redux/action";
+import { useParams, useNavigate } from "react-router";
 
 const ArticlePage = () => {
   const fetchedArticle = useSelector((state) => state.article.content);
@@ -16,37 +16,28 @@ const ArticlePage = () => {
   const myProfile = useSelector((state) => state.myProfile.content);
   const param = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   //compilazione campi
   const [remove, setRemove] = useState("");
   const [error, setError] = useState(false);
-  const [generi, setGeneri] = useState([]);
+  const [generi, setGeneri] = useState(fetchedArticle?.genresList);
   const [errorText, setErrorText] = useState("");
-  const [article, setArticle] = useState({
-    titolo: "",
-    svillupatore: "",
-    pubblicazione: "",
-    tema: "",
-    genere: [],
-    storia: "",
-    esperienza: "",
-    consigli: "",
-    descrizione: "",
-  });
+  const [article, setArticle] = useState(fetchedArticle);
   const handleChange = (propertyName, propertyValue) => {
-    if (propertyName !== "genere") {
+    if (propertyName !== "genresList") {
       setArticle({ ...article, [propertyName]: propertyValue });
-    } else if (!article.genere.includes(propertyValue) && article.genere.length < 3) {
-      article.genere.push(propertyValue);
+    } else if (!article.genresList.includes(propertyValue) && article.genresList.length < 3) {
+      article.genresList.push(propertyValue);
       setGeneri([...generi, propertyValue]);
-    } else if (!article.genere.includes(propertyValue) && article.genere.length > 2) {
+    } else if (!article.genresList.includes(propertyValue) && article.genresList.length > 2) {
       setErrorText("lista troppo lunga (massimo 3 generi)");
       setError(true);
     }
   };
 
   const handleRemove = (genre) => {
-    article.genere.splice(article.genere.indexOf(genre), 1);
-    generi.splice(generi.indexOf(genre), 1);
+    article.genresList.splice(article.genresList.indexOf(remove), 1);
+    setGeneri(generi.filter((_, i) => i !== generi.indexOf(remove)));
   };
 
   const handleSubmit = (propertyName, propertyValue) => {
@@ -56,11 +47,10 @@ const ArticlePage = () => {
       article.svillupatore !== "" &&
       article.pubblicazione !== "" &&
       article.tema !== "" &&
-      article.genere.length > 0 &&
+      article.genresList.length > 0 &&
       article.storia !== "" &&
       article.esperienza !== "" &&
-      article.consigli !== "" &&
-      article.descrizione !== ""
+      article.consigli !== ""
     ) {
       //implementare logica da inviare al backend
       console.log(article);
@@ -82,11 +72,20 @@ const ArticlePage = () => {
     dispatch(getArticle(param.id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //--------------------------------
+  const handleDelete = () => {
+    const isOk = window.confirm("sei sicuro di voler eliminare questo articolo ?");
+    alert(isOk);
 
+    if (isOk) {
+      dispatch(deleteArticle(fetchedArticle.id, token));
+      navigate("/");
+    }
+  };
   //--------------------------------------------
   return (
     <>
-      {fetchedArticle.titolo && (
+      {fetchedArticle && (
         <Container
           fluid
           style={{
@@ -94,46 +93,48 @@ const ArticlePage = () => {
               "url(https://as2.ftcdn.net/v2/jpg/05/91/90/95/1000_F_591909533_UfNjf5M9QS1DgegeIgN60pTTIQyUUYqG.jpg)",
             objectFit: "cover",
           }}
-          className="p-5"
+          className="p-sm-1 p-md-3 p-lg-5"
         >
           <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
             <Row>
               <Col xs={12} style={{ borderBottom: "solid 3px #89C0F2" }} className="p-0">
                 <ArticleCover
-                  image={fetchedArticle.immagineSecondaria}
-                  id={fetchedArticle.id}
+                  image={fetchedArticle?.immagineSecondaria}
+                  id={fetchedArticle?.id}
                   token={token}
                 ></ArticleCover>
               </Col>
-              <Col xs={12} md={6} style={{ borderRight: "solid 3px #89C0F2" }} className="p-0">
-                <ArticleStory storia={fetchedArticle.storia}></ArticleStory>
+              <Col xs={12} md={6} className="p-0 borderRightToBottom" style={{ overflow: "auto" }}>
+                <ArticleStory storia={fetchedArticle?.storia}></ArticleStory>
               </Col>
-              <Col xs={12} md={6} className="p-0">
+              <Col xs={12} md={6} className="p-0" style={{ overflow: "auto" }}>
                 <ArticleSpecitics article={fetchedArticle} token={token}></ArticleSpecitics>
               </Col>
-              <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2" }}>
-                <ArticleEsperience esperienza={fetchedArticle.esperienza}></ArticleEsperience>
+              <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2", overflow: "auto" }}>
+                <ArticleEsperience esperienza={fetchedArticle?.esperienza}></ArticleEsperience>
               </Col>
-              <Col xs={12} className="p-0">
-                <ArticleSuggestion consigli={fetchedArticle.consigli}></ArticleSuggestion>
+              <Col xs={12} className="p-0" style={{ overflow: "auto" }}>
+                <ArticleSuggestion consigli={fetchedArticle?.consigli}></ArticleSuggestion>
               </Col>
-              <Col xs={12} className="p-0 d-flex" style={{ borderTop: "solid 3px #89C0F2" }}>
-                <Container className=" d-flex">
+              <Col xs={12} className="p-0 d-flex" style={{ borderTop: "solid 3px #89C0F2", overflow: "auto" }}>
+                <Container className=" d-flex flex-column flex-sm-row">
                   <p className="text-light p-1 me-auto my-0">
                     <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
-                    {fetchedArticle.user.nome + " " + fetchedArticle.user.cognome}
+                    {fetchedArticle?.user.nome + " " + fetchedArticle?.user.cognome}
                   </p>
-                  <Button className="btn-primary fw-bold mx-2" onClick={() => handleShow(true)}>
+                  <Button className="btn-primary fw-bold mx-sm-2" onClick={() => handleShow(true)}>
                     Modifica articolo
                   </Button>
-                  <Button className="btn-danger fw-bold">elimina articolo</Button>
+                  <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
+                    elimina articolo
+                  </Button>
                 </Container>
               </Col>
             </Row>
           </Container>
 
           {myProfile !== null && (
-            <CommentZone comments={fetchedArticle.comments} articleid={fetchedArticle.id}></CommentZone>
+            <CommentZone comments={fetchedArticle?.comments} articleid={fetchedArticle?.id}></CommentZone>
           )}
         </Container>
       )}
@@ -157,9 +158,9 @@ const ArticlePage = () => {
                 <Form.Control
                   type="text"
                   size="lg"
-                  style={{ border: "solid 3px  #89C0F2" }}
+                  style={{ border: "solid 3px #89C0F2" }}
                   onChange={(e) => handleChange("titolo", e.target.value)}
-                  value={article.titolo}
+                  value={article?.titolo}
                 />
               </Form.Group>
             </Col>
@@ -171,7 +172,7 @@ const ArticlePage = () => {
                   size="lg"
                   style={{ border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("svillupatore", e.target.value)}
-                  value={article.svillupatore}
+                  value={article?.svillupatore}
                 />
               </Form.Group>
             </Col>
@@ -184,7 +185,7 @@ const ArticlePage = () => {
                   size="lg"
                   style={{ border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("pubblicazione", e.target.value)}
-                  value={article.pubblicazione}
+                  value={article?.pubblicazione}
                 />
               </Form.Group>
             </Col>{" "}
@@ -197,6 +198,7 @@ const ArticlePage = () => {
                   onChange={(e) => {
                     handleChange("tema", e.target.value);
                   }}
+                  value={article?.tema}
                   style={{ border: "solid 3px  #89C0F2" }}
                   size="lg"
                 >
@@ -218,13 +220,13 @@ const ArticlePage = () => {
                 </Form.Select>
               </Form.Group>{" "}
             </Col>{" "}
-            <Form.Label className="fw-bold">genere</Form.Label>
+            <Form.Label className="fw-bold">generi</Form.Label>
             <Col xs={6} md={6}>
               <Form.Group className="mb-3">
                 <Form.Select
                   aria-label="Default select example"
                   onChange={(e) => {
-                    handleChange("genere", e.target.value);
+                    handleChange("genresList", e.target.value);
                   }}
                   style={{ border: "solid 3px  #89C0F2" }}
                   multiple={true}
@@ -263,8 +265,8 @@ const ArticlePage = () => {
               </Form.Group>
             </Col>
             <Col xs={6} md={6} className="d-flex mb-0 ">
-              <ul style={{ listStyle: "none", border: "solid 3px  #89C0F2" }} className="p-0">
-                {generi.map((genre, i) => {
+              <ul style={{ listStyle: "none", border: "solid 3px  #89C0F2", minWidth: "134px" }} className="p-0">
+                {generi?.map((genre, i) => {
                   return (
                     <li className="fw-bold" key={`list-item-${i}`}>
                       {genre}
@@ -287,7 +289,7 @@ const ArticlePage = () => {
                   as="textarea"
                   style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("storia", e.target.value)}
-                  value={article.storia}
+                  value={article?.storia}
                 />
               </Form.Group>
             </Col>
@@ -298,7 +300,7 @@ const ArticlePage = () => {
                   as="textarea"
                   style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("esperienza", e.target.value)}
-                  value={article.esperienza}
+                  value={article?.esperienza}
                 />
               </Form.Group>
             </Col>
@@ -309,18 +311,7 @@ const ArticlePage = () => {
                   as="textarea"
                   style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("consigli", e.target.value)}
-                  value={article.consigli}
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">breve descrizione</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
-                  onChange={(e) => handleChange("descrizione", e.target.value)}
-                  value={article.descrizione}
+                  value={article?.consigli}
                 />
               </Form.Group>
             </Col>

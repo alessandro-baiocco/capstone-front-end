@@ -22,17 +22,25 @@ const SingleComment = (props) => {
 
   return (
     <>
-      <Container fluid className=" my-4" style={{ borderBlock: "solid 3px #89C0F2" }}>
+      <Container fluid className=" my-4" style={{ borderBlock: "solid 3px #89C0F2", position: "relative" }}>
         <Row>
-          <Col xs={2} className="p-0">
+          <Col xs={4} md={3} lg={2} className="p-0">
             <img src={props.comment.user?.avatar} alt="profile-avatar" width={"100%"} height={"100%"} />
           </Col>
-          <Col xs={8}>
+          <Col xs={8} md={9} lg={10}>
             <p className="fs-2 text-light fw-bold mb-0">@{props.comment.user?.username}</p>
-            <p className="fs-3 text-light">{props.comment.comment}</p>
-          </Col>
-
-          <Col xs={2}>
+            <p
+              className="text-light"
+              style={{
+                fontSize: "1.6rem",
+                wordWrap: "break-word",
+                lineHeight: "1.6rem",
+                height: "110px",
+                overflowY: "auto",
+              }}
+            >
+              {props.comment.comment}
+            </p>
             {props.myProfile.id === props.comment.user.id && (
               <Button
                 className="btn-primary fw-bold"
@@ -55,6 +63,8 @@ const SingleComment = (props) => {
                 </Button>
               ))}
           </Col>
+
+          <Col xs={1} className="d-flex" style={{ bottom: "0px", left: "0px" }}></Col>
         </Row>
       </Container>
       {/* ------------------------modale------------------------------ */}
