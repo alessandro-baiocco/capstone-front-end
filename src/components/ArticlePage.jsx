@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Modal, Placeholder, Row } from "react-bootstrap";
 import ArticleCover from "./articlePageComponents/ArticleCover";
 import ArticleStory from "./articlePageComponents/ArticleStory";
 import ArticleSpecitics from "./articlePageComponents/ArticleSpecitics";
@@ -7,8 +7,9 @@ import ArticleSuggestion from "./articlePageComponents/ArticleSuggestion";
 import CommentZone from "./articlePageComponents/CommentZone";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteArticle, getArticle, putArticle } from "../redux/action";
+import { ERROR_FALSE, deleteArticle, getArticle, putArticle } from "../redux/action";
 import { useParams, useNavigate } from "react-router";
+import GhostIcon from "./GhostIcon";
 
 const ArticlePage = () => {
   const fetchedArticle = useSelector((state) => state.article.content);
@@ -17,6 +18,9 @@ const ArticlePage = () => {
   const param = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loading = useSelector((state) => state.loading.loading);
+  const isError = useSelector((state) => state.loading.error);
+
   //compilazione campi
   const [remove, setRemove] = useState("");
   const [error, setError] = useState(false);
@@ -75,8 +79,6 @@ const ArticlePage = () => {
   //--------------------------------
   const handleDelete = () => {
     const isOk = window.confirm("sei sicuro di voler eliminare questo articolo ?");
-    alert(isOk);
-
     if (isOk) {
       dispatch(deleteArticle(fetchedArticle.id, token));
       navigate("/");
@@ -85,6 +87,14 @@ const ArticlePage = () => {
   //--------------------------------------------
   return (
     <>
+      {isError && (
+        <Alert variant="danger" onClose={() => dispatch({ type: ERROR_FALSE, payload: "" })} dismissible>
+          <Alert.Heading>
+            <GhostIcon /> <GhostIcon /> <GhostIcon />
+          </Alert.Heading>
+          <p>errore nel caricamento dell'articolo</p>
+        </Alert>
+      )}
       {fetchedArticle && (
         <Container
           fluid
@@ -98,43 +108,108 @@ const ArticlePage = () => {
           <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
             <Row>
               <Col xs={12} style={{ borderBottom: "solid 3px #89C0F2" }} className="p-0">
-                <ArticleCover
-                  image={fetchedArticle?.immagineSecondaria}
-                  id={fetchedArticle?.id}
-                  token={token}
-                ></ArticleCover>
+                {isError && (
+                  <img
+                    src="https://as1.ftcdn.net/v2/jpg/00/66/90/50/1000_F_66905006_93t1zUK90XCKwHsdXrlT2xJKqa4vV2bV.jpg"
+                    alt="error"
+                  />
+                )}
+
+                {loading ? (
+                  <Container fluid className="p-0">
+                    {" "}
+                    <img
+                      src="https://as2.ftcdn.net/v2/jpg/04/71/57/81/1000_F_471578161_KxnbqLUR4iq78bUKuWH6P9iTjEhmEww9.jpg"
+                      alt="loading"
+                      style={{ maxHeight: "100px", width: "100%", objectFit: "cover" }}
+                    />
+                  </Container>
+                ) : (
+                  <ArticleCover
+                    image={fetchedArticle?.immagineSecondaria}
+                    id={fetchedArticle?.id}
+                    token={token}
+                  ></ArticleCover>
+                )}
               </Col>
               <Col xs={12} md={6} className="p-0 borderRightToBottom" style={{ overflow: "auto" }}>
-                <ArticleStory storia={fetchedArticle?.storia}></ArticleStory>
+                {!loading ? (
+                  <ArticleStory storia={fetchedArticle?.storia}></ArticleStory>
+                ) : (
+                  Array.from(Array(8).keys()).map((spinner, i) => (
+                    <Placeholder xs={12} bg="primary" key={`placeholder-${i}`} />
+                  ))
+                )}
               </Col>
               <Col xs={12} md={6} className="p-0" style={{ overflow: "auto" }}>
-                <ArticleSpecitics article={fetchedArticle} token={token}></ArticleSpecitics>
+                {isError && (
+                  <Container fluid className="p-0">
+                    <img
+                      src="https://as1.ftcdn.net/v2/jpg/00/66/90/50/1000_F_66905006_93t1zUK90XCKwHsdXrlT2xJKqa4vV2bV.jpg"
+                      alt="error"
+                      style={{ height: "100%", width: "100%", objectFit: "cover" }}
+                    />
+                  </Container>
+                )}
+
+                {loading ? (
+                  <Container fluid className="p-0">
+                    {" "}
+                    <img
+                      src="https://as2.ftcdn.net/v2/jpg/04/71/57/81/1000_F_471578161_KxnbqLUR4iq78bUKuWH6P9iTjEhmEww9.jpg"
+                      alt="loading"
+                      style={{ height: "100%", width: "100%", objectFit: "cover" }}
+                    />
+                  </Container>
+                ) : (
+                  <ArticleSpecitics article={fetchedArticle} token={token}></ArticleSpecitics>
+                )}
               </Col>
               <Col xs={12} className="p-0" style={{ borderTop: "solid 3px #89C0F2", overflow: "auto" }}>
-                <ArticleEsperience esperienza={fetchedArticle?.esperienza}></ArticleEsperience>
+                {!loading ? (
+                  <ArticleEsperience esperienza={fetchedArticle?.esperienza}></ArticleEsperience>
+                ) : (
+                  Array.from(Array(3).keys()).map((spinner, i) => (
+                    <Placeholder xs={12} bg="primary" key={`placeholder-${i}`} />
+                  ))
+                )}
               </Col>
               <Col xs={12} className="p-0" style={{ overflow: "auto" }}>
-                <ArticleSuggestion consigli={fetchedArticle?.consigli}></ArticleSuggestion>
+                {!loading ? (
+                  <ArticleSuggestion consigli={fetchedArticle?.consigli}></ArticleSuggestion>
+                ) : (
+                  Array.from(Array(3).keys()).map((spinner, i) => (
+                    <Placeholder xs={12} bg="primary" key={`placeholder-${i}`} />
+                  ))
+                )}
               </Col>
               <Col xs={12} className="p-0 d-flex" style={{ borderTop: "solid 3px #89C0F2", overflow: "auto" }}>
-                <Container className=" d-flex flex-column flex-sm-row">
-                  <p className="text-light p-1 me-auto my-0">
-                    <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
-                    {fetchedArticle?.user.nome + " " + fetchedArticle?.user.cognome}
-                  </p>
-                  <Button
-                    className="btn-primary fw-bold mx-sm-2"
-                    onClick={() => {
-                      handleShow(true);
-                      setArticle(fetchedArticle);
-                    }}
-                  >
-                    Modifica articolo
-                  </Button>
-                  <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
-                    elimina articolo
-                  </Button>
-                </Container>
+                {!loading ? (
+                  <Container className=" d-flex flex-column flex-sm-row">
+                    <p className="text-light p-1 me-auto my-0">
+                      <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
+                      {fetchedArticle?.user.nome + " " + fetchedArticle?.user.cognome}
+                    </p>
+                    {myProfile.username === article.user.username && (
+                      <Button
+                        className="btn-primary fw-bold mx-sm-2"
+                        onClick={() => {
+                          handleShow(true);
+                          setArticle(fetchedArticle);
+                        }}
+                      >
+                        Modifica articolo
+                      </Button>
+                    )}
+                    {(myProfile.username === article.user.username || myProfile.ruolo === "ADMIN") && (
+                      <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
+                        elimina articolo
+                      </Button>
+                    )}
+                  </Container>
+                ) : (
+                  <Placeholder xs={12} />
+                )}
               </Col>
             </Row>
           </Container>

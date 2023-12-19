@@ -1,9 +1,10 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import myProfile from "../redux/reducers/myProfile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { REMOVE_ME } from "../redux/action";
 
 const MyNavBar = () => {
+  const dispatch = useDispatch();
   const myProfile = useSelector((state) => state.myProfile.content);
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-dark text-light">
@@ -30,6 +31,11 @@ const MyNavBar = () => {
                   scrivi un'articolo
                 </Link>
               </Nav>
+              <Button className="btn-danger rounded me-2" onClick={() => dispatch({ type: REMOVE_ME, payload: null })}>
+                <Link to="/" className="text-light text-decoration-none m-2 fw-bold">
+                  disconnetti
+                </Link>
+              </Button>
               <p className="fw-bold fs-3 mb-0">BENVENUTO {myProfile.username} </p>
             </>
           ) : (

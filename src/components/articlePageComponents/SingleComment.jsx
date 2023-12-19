@@ -14,6 +14,7 @@ const SingleComment = (props) => {
 
   const handleSubmit = () => {
     if (comment.comment !== "") {
+      console.log(comment);
       dispatch(changeComment(comment, props.token));
     }
   };

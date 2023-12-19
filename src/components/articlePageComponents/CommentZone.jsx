@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Placeholder, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { postComment } from "../../redux/action";
 import SingleComment from "./SingleComment";
+import GhostIcon from "../GhostIcon";
 
 const CommentZone = (props) => {
+  const loading = useSelector((state) => state.loading.loading);
   const token = useSelector((state) => state.token.content);
   const myProfile = useSelector((state) => state.myProfile.content);
   const allComments = useSelector((state) => state.comments.content);
@@ -17,8 +19,6 @@ const CommentZone = (props) => {
     }
   };
 
-  //-----------------------put comment --------------------------
-
   return (
     <>
       <Container
@@ -30,9 +30,73 @@ const CommentZone = (props) => {
           overflowY: "auto",
         }}
       >
-        {allComments.map((comment, i) => {
-          return <SingleComment comment={comment} myProfile={myProfile} token={token} key={`comment-${i}`} />;
-        })}
+        {loading ? (
+          <Container fluid className=" my-4" style={{ borderBlock: "solid 3px #89C0F2", position: "relative" }}>
+            <Row>
+              <Col xs={4} md={3} lg={2} className="p-0">
+                <Spinner animation="grow" variant="info" style={{ width: "100%", height: "100%" }} />
+              </Col>
+              <Col xs={8} md={9} lg={10}>
+                <p className="fs-2 text-light fw-bold mb-0">
+                  <Placeholder xs={3} bg="primary" />
+                </p>
+                <p
+                  className="text-light"
+                  style={{
+                    fontSize: "1.6rem",
+                    wordWrap: "break-word",
+                    lineHeight: "1.6rem",
+                    height: "110px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {Array.from(Array(3).keys()).map((spinner, i) => (
+                    <Placeholder xs={12} bg="primary" key={`placeholder-${i}`} />
+                  ))}
+                </p>
+              </Col>
+
+              <Col xs={1} className="d-flex" style={{ bottom: "0px", left: "0px" }}></Col>
+            </Row>
+          </Container>
+        ) : allComments.length > 0 ? (
+          allComments.map((comment, i) => {
+            return <SingleComment comment={comment} myProfile={myProfile} token={token} key={`comment-${i}`} />;
+          })
+        ) : (
+          <>
+            <Container fluid className=" my-4" style={{ borderBlock: "solid 3px #89C0F2", position: "relative" }}>
+              <Row>
+                <Col xs={4} md={3} lg={2} className="p-0">
+                  <img
+                    src="https://as1.ftcdn.net/v2/jpg/06/81/26/62/1000_F_681266245_uhyUvnwDIm8ftIvD4qk3rdI90DmCH0aI.jpg"
+                    alt="empty"
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </Col>
+                <Col xs={8} md={9} lg={10}>
+                  <p className="fs-2 text-light fw-bold mb-0">
+                    <GhostIcon /> <GhostIcon /> <GhostIcon />
+                  </p>
+                  <p
+                    className="text-light"
+                    style={{
+                      fontSize: "1.6rem",
+                      wordWrap: "break-word",
+                      lineHeight: "1.6rem",
+                      height: "110px",
+                      overflowY: "auto",
+                    }}
+                  >
+                    non ci sono commenti disponibili
+                  </p>
+                </Col>
+
+                <Col xs={1} className="d-flex" style={{ bottom: "0px", left: "0px" }}></Col>
+              </Row>
+            </Container>
+          </>
+        )}
       </Container>
       <Container className="my-3" style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px  #89C0F2" }}>
         <Row>

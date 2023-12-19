@@ -24,12 +24,12 @@ const loading = (state = initialState, action) => {
     case SUCCESS_TRUE:
       return {
         ...state,
-        error: true,
+        success: true,
       };
     case SUCCESS_FALSE:
       return {
         ...state,
-        error: false,
+        success: false,
       };
     case LOADING_TRUE:
       return {

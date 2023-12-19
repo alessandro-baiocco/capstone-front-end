@@ -8,6 +8,8 @@ import token from "../reducers/token";
 import cards from "../reducers/cards";
 import article from "../reducers/article";
 import comments from "../reducers/comments";
+import loading from "../reducers/loading";
+import pagination from "../reducers/pagination";
 
 const rootReducer = combineReducers({
   myProfile: myProfile,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   cards: cards,
   article: article,
   comments: comments,
+  loading: loading,
+  pagination: pagination,
 });
 
 const persistConfig = { key: "root", storage };

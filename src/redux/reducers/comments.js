@@ -23,11 +23,12 @@ const comments = (state = initialState, action) => {
     case PUT_COMMENT:
       return {
         ...state,
-        content: state.content.map((comment) => {
-          if (comment.id === action.payload.id) {
-            comment.comment = action.payload.comment;
+        content: state.content.map((singleComment) => {
+          if (singleComment.id === action.payload.comment.id) {
+            singleComment.comment = action.payload.comment;
           }
-          return comment;
+          console.log(singleComment.id, action.payload.comment.id);
+          return singleComment;
         }),
       };
     default:

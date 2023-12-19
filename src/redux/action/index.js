@@ -16,10 +16,13 @@ export const ERROR_FALSE = "ERROR_FALSE";
 export const ERROR_TRUE = "ERROR_TRUE";
 export const SUCCESS_FALSE = "SUCCESS_FALSE";
 export const SUCCESS_TRUE = "SUCCESS_TRUE";
+export const GET_PAGINATION = "GET_PAGINATION";
+export const ACTIVE_PAGE = "ACTIVE_PAGE";
 
 //----------------user
 export const registerUser = (data) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/public/auth/register", {
         method: "POST",
@@ -29,6 +32,7 @@ export const registerUser = (data) => {
         },
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         const token = await resp.json();
         console.log(token);
         dispatch({ type: GET_ME, payload: data });
@@ -47,6 +51,7 @@ export const registerUser = (data) => {
 
 export const getUserToken = (user) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/public/auth/login", {
         method: "POST",
@@ -56,6 +61,7 @@ export const getUserToken = (user) => {
         body: JSON.stringify(user),
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let myToken = await resp.json();
         console.log(myToken.accessToken);
         dispatch({ type: GET_TOKEN, payload: myToken.accessToken });
@@ -73,6 +79,7 @@ export const getUserToken = (user) => {
 
 export const getUserInformation = (userId, token) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/private/users/" + userId, {
         headers: {
@@ -80,6 +87,7 @@ export const getUserInformation = (userId, token) => {
         },
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let me = await resp.json();
         console.log(me);
         dispatch({ type: GET_ME, payload: me });
@@ -97,6 +105,7 @@ export const getUserInformation = (userId, token) => {
 
 export const putUserProfile = (body, token) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/private/users/" + body.id, {
         method: "PUT",
@@ -107,6 +116,7 @@ export const putUserProfile = (body, token) => {
         body: JSON.stringify(body),
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let user = await resp.json();
         dispatch({ type: GET_ME, payload: user });
       } else {
@@ -123,36 +133,44 @@ export const putUserProfile = (body, token) => {
 
 export const changeProfileImage = (token, profileImg) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     const formData = new FormData();
     formData.append("avatar", profileImg);
     console.log(formData);
-    const response = await fetch("http://localhost:8080/private/users/me/upload", {
+    const resp = await fetch("http://localhost:8080/private/users/me/upload", {
       method: "PATCH",
       body: formData,
       headers: {
         Authorization: "Bearer " + token,
       },
     });
-    if (response.ok) {
-      const me = await response.json();
+    if (resp.ok) {
+      dispatch({ type: ERROR_FALSE, payload: "" });
+      const me = await resp.json();
       dispatch({ type: GET_ME, payload: me });
+    } else {
+      dispatch({ type: ERROR_TRUE, payload: resp.text });
+      console.log(resp.text);
     }
   };
 };
 
 //--------------------------cards--------------------
 
-export const getAllCards = () => {
+export const getAllCards = (page) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      dispatch({ type: LOADING_TRUE, payload: true });
-      let resp = await fetch("http://localhost:8080/public/content/cards");
+      let resp = await fetch("http://localhost:8080/public/content/cards?page=" + page);
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let cards = await resp.json();
+        dispatch({ type: GET_PAGINATION, payload: cards.totalPages });
+
         dispatch({ type: GET_CARDS, payload: cards });
       } else {
         dispatch({ type: ERROR_TRUE, payload: resp.text });
-        console.log("error");
+        console.log(resp.text);
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
@@ -167,12 +185,15 @@ export const getAllCards = () => {
 
 export const getArticle = (articleId) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/public/content/articles/" + articleId);
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let article = await resp.json();
+        const reversedComment = article.comments.reverse();
         dispatch({ type: GET_ARTICLE, payload: article });
-        dispatch({ type: GET_COMMENTS, payload: article.comments });
+        dispatch({ type: GET_COMMENTS, payload: reversedComment });
       } else {
         console.log("error");
         dispatch({ type: ERROR_TRUE, payload: resp.text });
@@ -197,6 +218,7 @@ export const postArticle = (body, token) => {
         body: JSON.stringify(body),
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
       } else {
         console.log("error");
         dispatch({ type: ERROR_TRUE, payload: resp.text });
@@ -211,6 +233,7 @@ export const postArticle = (body, token) => {
 
 export const putArticle = (articleId, body, token) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
         method: "PUT",
@@ -221,6 +244,7 @@ export const putArticle = (articleId, body, token) => {
         body: JSON.stringify(body),
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let article = await resp.json();
         dispatch({ type: GET_ARTICLE, payload: article });
       } else {
@@ -237,6 +261,7 @@ export const putArticle = (articleId, body, token) => {
 
 export const deleteArticle = (articleId, token) => {
   return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
         method: "DELETE",
@@ -245,6 +270,7 @@ export const deleteArticle = (articleId, token) => {
         },
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: DELETE_ARTICLE, payload: null });
       } else {
         console.log("error");
@@ -267,21 +293,20 @@ export const changeCoverArticle = (token, coverImg, id) => {
       const formData = new FormData();
       formData.append("picture", coverImg);
       console.log(formData);
-      const response = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
+      const resp = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
         method: "PATCH",
         body: formData,
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      if (response.ok) {
-        const article = await response.json();
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        const article = await resp.json();
         dispatch({ type: GET_ARTICLE, payload: article });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
-    } finally {
-      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -292,21 +317,20 @@ export const changeimageArticle = (token, coverImg, id) => {
       const formData = new FormData();
       formData.append("picture", coverImg);
       console.log(formData);
-      const response = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
+      const resp = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
         method: "PATCH",
         body: formData,
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      if (response.ok) {
-        const article = await response.json();
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        const article = await resp.json();
         dispatch({ type: GET_ARTICLE, payload: article });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
-    } finally {
-      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
@@ -325,6 +349,7 @@ export const postComment = (comment, token) => {
         body: JSON.stringify(comment),
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         let myComment = await resp.json();
         dispatch({ type: POST_COMMENT, payload: myComment });
       } else {
@@ -349,6 +374,7 @@ export const deleteComment = (id, token) => {
         },
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: DELETE_COMMENT, payload: id });
       } else {
         console.log("error");
@@ -374,11 +400,11 @@ export const changeComment = (body, token) => {
         },
       });
       if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
         const putComment = resp.json();
         dispatch({ type: PUT_COMMENT, payload: putComment });
       } else {
         console.log("error");
-        alert("errore nel post!");
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
