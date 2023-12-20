@@ -188,9 +188,9 @@ const ArticlePage = () => {
                   <Container className=" d-flex flex-column flex-sm-row">
                     <p className="text-light p-1 me-auto my-0">
                       <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
-                      {fetchedArticle?.user.nome + " " + fetchedArticle?.user.cognome}
+                      {fetchedArticle?.user?.nome + " " + fetchedArticle?.user?.cognome}
                     </p>
-                    {myProfile.username === article.user.username && (
+                    {myProfile !== null && myProfile.username === article.user?.username && (
                       <Button
                         className="btn-primary fw-bold mx-sm-2"
                         onClick={() => {
@@ -201,11 +201,12 @@ const ArticlePage = () => {
                         Modifica articolo
                       </Button>
                     )}
-                    {(myProfile.username === article.user.username || myProfile.ruolo === "ADMIN") && (
-                      <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
-                        elimina articolo
-                      </Button>
-                    )}
+                    {myProfile !== null &&
+                      (myProfile.username === article.user.username || myProfile.ruolo === "ADMIN") && (
+                        <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
+                          elimina articolo
+                        </Button>
+                      )}
                   </Container>
                 ) : (
                   <Placeholder xs={12} />
@@ -214,8 +215,20 @@ const ArticlePage = () => {
             </Row>
           </Container>
 
-          {myProfile !== null && (
+          {myProfile !== null ? (
             <CommentZone comments={fetchedArticle?.comments} articleid={fetchedArticle?.id}></CommentZone>
+          ) : (
+            <Container
+              className="mt-4 p-0"
+              style={{
+                backgroundColor: "rgb(36 112 222 / 32%)",
+                border: "solid 3px #89C0F2",
+                maxHeight: "500px",
+                overflowY: "auto",
+              }}
+            >
+              <p className="text-light fs-2 fw-bold">accedi per vedere i commenti </p>
+            </Container>
           )}
         </Container>
       )}

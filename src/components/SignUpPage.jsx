@@ -10,15 +10,15 @@ const SignUpPage = () => {
   const token = useSelector((state) => state.token.content);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, setUser] = useState({ userName: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
+  const [user, setUser] = useState({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
   const handleChange = (propertyName, propertyValue) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (user.nome !== "" || user.cognome !== "" || user.userName !== "" || user.password !== "" || user.email !== "") {
+    if (user.nome !== "" || user.cognome !== "" || user.username !== "" || user.password !== "" || user.email !== "") {
       dispatch(registerUser(user));
       console.log(user);
-      setUser({ userName: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
+      setUser({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
     } else {
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
@@ -81,7 +81,7 @@ const SignUpPage = () => {
                 type="text"
                 size="lg"
                 style={{ border: "solid 3px  #89C0F2" }}
-                onChange={(e) => handleChange("userName", e.target.value)}
+                onChange={(e) => handleChange("username", e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3">

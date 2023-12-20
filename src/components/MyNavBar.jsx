@@ -27,9 +27,11 @@ const MyNavBar = () => {
                 <Link to="/profile/me" className="text-light text-decoration-none m-2 fw-bold">
                   Profilo
                 </Link>
-                <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
-                  scrivi un'articolo
-                </Link>
+                {myProfile.ruolo !== "USER" && (
+                  <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
+                    scrivi un'articolo
+                  </Link>
+                )}
               </Nav>
               <Button className="btn-danger rounded me-2" onClick={() => dispatch({ type: REMOVE_ME, payload: null })}>
                 <Link to="/" className="text-light text-decoration-none m-2 fw-bold">
