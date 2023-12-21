@@ -35,8 +35,6 @@ export const registerUser = (data) => {
         dispatch({ type: ERROR_FALSE, payload: "" });
         const token = await resp.json();
         console.log(token);
-        dispatch({ type: GET_ME, payload: data });
-        console.log("Registrato con successo!");
         dispatch({ type: GET_TOKEN, payload: token.accessToken });
       } else {
         console.log(resp);
