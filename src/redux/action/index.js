@@ -18,13 +18,14 @@ export const SUCCESS_FALSE = "SUCCESS_FALSE";
 export const SUCCESS_TRUE = "SUCCESS_TRUE";
 export const GET_PAGINATION = "GET_PAGINATION";
 export const ACTIVE_PAGE = "ACTIVE_PAGE";
+export const url = "https://capstonebackend-5f7daf2f527c.herokuapp.com";
 
 //----------------user
 export const registerUser = (data) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/public/auth/register", {
+      let resp = await fetch(url + "/public/auth/register", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -53,7 +54,7 @@ export const getUserToken = (user) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/public/auth/login", {
+      let resp = await fetch(url + "/public/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export const getUserInformation = (userId, token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/users/" + userId, {
+      let resp = await fetch(url + "/private/users/" + userId, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -107,7 +108,7 @@ export const putUserProfile = (body, token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/users/" + body.id, {
+      let resp = await fetch(url + "/private/users/" + body.id, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
@@ -137,7 +138,7 @@ export const changeProfileImage = (token, profileImg) => {
     const formData = new FormData();
     formData.append("avatar", profileImg);
     console.log(formData);
-    const resp = await fetch("http://localhost:8080/private/users/me/upload", {
+    const resp = await fetch(url + "/private/users/me/upload", {
       method: "PATCH",
       body: formData,
       headers: {
@@ -161,7 +162,7 @@ export const getAllCards = (page) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/public/content/cards?page=" + page);
+      let resp = await fetch(url + "/public/content/cards?page=" + page);
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let cards = await resp.json();
@@ -187,7 +188,7 @@ export const getArticle = (articleId) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/public/content/articles/" + articleId);
+      let resp = await fetch(url + "/public/content/articles/" + articleId);
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let article = await resp.json();
@@ -209,7 +210,7 @@ export const getArticle = (articleId) => {
 export const postArticle = (body, token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/articles", {
+      let resp = await fetch(url + "/private/articles", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,
@@ -235,7 +236,7 @@ export const putArticle = (articleId, body, token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
+      let resp = await fetch(url + "/private/articles/" + articleId, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
@@ -263,7 +264,7 @@ export const deleteArticle = (articleId, token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/articles/" + articleId, {
+      let resp = await fetch(url + "/private/articles/" + articleId, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -293,7 +294,7 @@ export const changeCoverArticle = (token, coverImg, id) => {
       const formData = new FormData();
       formData.append("picture", coverImg);
       console.log(formData);
-      const resp = await fetch("http://localhost:8080/private/articles/" + id + "/secondary", {
+      const resp = await fetch(url + "/private/articles/" + id + "/secondary", {
         method: "PATCH",
         body: formData,
         headers: {
@@ -317,7 +318,7 @@ export const changeimageArticle = (token, coverImg, id) => {
       const formData = new FormData();
       formData.append("picture", coverImg);
       console.log(formData);
-      const resp = await fetch("http://localhost:8080/private/articles/" + id + "/primary", {
+      const resp = await fetch(url + "/private/articles/" + id + "/primary", {
         method: "PATCH",
         body: formData,
         headers: {
@@ -340,7 +341,7 @@ export const changeimageArticle = (token, coverImg, id) => {
 export const postComment = (comment, token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/comments", {
+      let resp = await fetch(url + "/private/comments", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,
@@ -367,7 +368,7 @@ export const postComment = (comment, token) => {
 export const deleteComment = (id, token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/comments/" + id, {
+      let resp = await fetch(url + "/private/comments/" + id, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -391,7 +392,7 @@ export const deleteComment = (id, token) => {
 export const changeComment = (body, token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/comments/" + body.id, {
+      let resp = await fetch(url + "/private/comments/" + body.id, {
         method: "PUT",
         body: JSON.stringify(body),
         headers: {
