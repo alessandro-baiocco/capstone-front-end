@@ -10,6 +10,7 @@ import article from "../reducers/article";
 import comments from "../reducers/comments";
 import loading from "../reducers/loading";
 import pagination from "../reducers/pagination";
+import users from "../reducers/users";
 
 const rootReducer = combineReducers({
   myProfile: myProfile,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   comments: comments,
   loading: loading,
   pagination: pagination,
+  users: users,
 });
 
 const persistConfig = { key: "root", storage };

@@ -1,6 +1,7 @@
 export const GET_CLIENTS = "GET_CLIENTS";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_ME = "GET_ME";
+export const GET_USERS = "GET_USERS";
 export const REMOVE_ME = "REMOVE_ME";
 export const GET_CARDS = "GET_CARDS";
 export const GET_ARTICLE = "GET_ARTICLE";
@@ -63,9 +64,29 @@ export const getUserToken = (user) => {
         let myToken = await resp.json();
         console.log(myToken.accessToken);
         dispatch({ type: GET_TOKEN, payload: myToken.accessToken });
-      } else {
-        console.log("error");
-        alert("username o password sbagliati!");
+      }
+    } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
+export const getAllUser = (token, page) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
+    try {
+      let resp = await fetch("http://localhost:8080/private/users?page=" + page, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        let users = await resp.json();
+        dispatch({ type: GET_PAGINATION, payload: users.totalPages });
+        dispatch({ type: GET_USERS, payload: users.content });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
@@ -89,9 +110,6 @@ export const getUserInformation = (userId, token) => {
         let me = await resp.json();
         console.log(me);
         dispatch({ type: GET_ME, payload: me });
-      } else {
-        console.log("error");
-        alert("username o password sbagliati!");
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
