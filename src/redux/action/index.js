@@ -6,6 +6,7 @@ export const REMOVE_ME = "REMOVE_ME";
 export const GET_CARDS = "GET_CARDS";
 export const GET_ARTICLE = "GET_ARTICLE";
 export const DELETE_ARTICLE = "DELETE_ARTICLE";
+export const DELETE_USER = "DELETE_USER";
 export const REMOVE_CARDS = "REMOVE_CARDS";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENTS = "GET_COMMENTS";
@@ -146,6 +147,32 @@ export const putUserProfile = (body, token) => {
     }
   };
 };
+export const putUserRole = (body, token, id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
+    try {
+      let resp = await fetch("http://localhost:8080/private/users/promote/" + id, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        dispatch({ type: SUCCESS_TRUE, payload: true });
+      } else {
+        console.log("error");
+        alert("errore nel post!");
+      }
+    } catch (error) {
+      dispatch({ type: ERROR_TRUE, payload: error.message });
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
 
 export const changeProfileImage = (token, profileImg) => {
   return async (dispatch, getState) => {
@@ -167,6 +194,31 @@ export const changeProfileImage = (token, profileImg) => {
     } else {
       dispatch({ type: ERROR_TRUE, payload: resp.text });
       console.log(resp.text);
+    }
+  };
+};
+export const deleteUser = (token, userId) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: LOADING_TRUE, payload: true });
+    try {
+      let resp = await fetch("http://localhost:8080/private/users/" + userId, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        dispatch({ type: DELETE_USER, payload: userId });
+      } else {
+        console.log("error");
+        alert("errore nel reperimento dati!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel reperimento dati!");
+    } finally {
+      dispatch({ type: LOADING_FALSE, payload: false });
     }
   };
 };
