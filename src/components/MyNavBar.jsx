@@ -29,7 +29,12 @@ const MyNavBar = () => {
                 </Link>
                 {myProfile.ruolo !== "USER" && (
                   <Link to="/PostArticle" className="text-light text-decoration-none m-2 fw-bold me-auto">
-                    scrivi un'articolo
+                    Scrivi un'articolo
+                  </Link>
+                )}
+                {myProfile.ruolo === "ADMIN" && (
+                  <Link to="/users" className="text-light text-decoration-none m-2 fw-bold me-auto">
+                    Lista utenti
                   </Link>
                 )}
               </Nav>

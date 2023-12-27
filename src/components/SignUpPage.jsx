@@ -38,7 +38,7 @@ const SignUpPage = () => {
         backgroundImage:
           "url(https://as2.ftcdn.net/v2/jpg/05/91/90/95/1000_F_591909533_UfNjf5M9QS1DgegeIgN60pTTIQyUUYqG.jpg)",
         objectFit: "cover",
-        height: "calc(100vh - 56px)",
+        minHeight: "calc(100vh - 56px)",
       }}
       className="p-5"
     >
@@ -66,7 +66,7 @@ const SignUpPage = () => {
             <Container className="d-flex p-3">
               <Button
                 className="btn-primary text-light fw-bold"
-                style={{ fontSize: "70px", width: "100%" }}
+                style={{ fontSize: "2rem", width: "100%", overflow: "hidden" }}
                 onClick={() => handleSubmit()}
               >
                 REGISTRATI
