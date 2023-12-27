@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Pagination } from "react-bootstrap";
+import { Container, Pagination, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../redux/action";
 import SingleUser from "./singleUser";
@@ -29,7 +29,7 @@ const UsersContainer = () => {
   return (
     <Container className="mb-4  p-0" style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
       <Pagination size="sm">{items}</Pagination>;
-      {users && users.map((user, i) => <SingleUser user={user} key={`user-${i}`} />)}
+      <Row>{users && users.map((user, i) => <SingleUser user={user} key={`user-${i}`} token={token} />)}</Row>
     </Container>
   );
 };
