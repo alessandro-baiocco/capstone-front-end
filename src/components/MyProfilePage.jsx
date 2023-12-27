@@ -1,14 +1,23 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import ProfileImage from "./profilePageComponents/ProfileImage";
 import ProfileInformations from "./profilePageComponents/ProfileInformations";
 import ProfileDescription from "./profilePageComponents/ProfileDescription";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
+import { deleteME } from "../redux/action";
 
 const MyProfilePage = () => {
   const navigate = useNavigate();
   const myProfile = useSelector((state) => state.myProfile.content);
+  const token = useSelector((state) => state.token.content);
+  const handleDelete = () => {
+    const isOk = window.confirm("sei sicuro di voler disiscriverti ?");
+    if (isOk) {
+      dispatch(deleteME(token));
+      navigate("/");
+    }
+  };
 
   const dispatch = useDispatch();
   const userId = useParams();
@@ -43,6 +52,9 @@ const MyProfilePage = () => {
               <ProfileDescription me={myProfile}></ProfileDescription>
             </Col>
           </Row>
+          <Button variant="danger fw-bold" onClick={() => handleDelete()}>
+            disiscriviti
+          </Button>
         </Container>
       </Container>
     </>

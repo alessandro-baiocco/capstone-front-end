@@ -199,7 +199,6 @@ export const changeProfileImage = (token, profileImg) => {
 };
 export const deleteUser = (token, userId) => {
   return async (dispatch, getState) => {
-    dispatch({ type: LOADING_TRUE, payload: true });
     try {
       let resp = await fetch("http://localhost:8080/private/users/" + userId, {
         method: "DELETE",
@@ -211,14 +210,32 @@ export const deleteUser = (token, userId) => {
         dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: DELETE_USER, payload: userId });
       } else {
-        console.log("error");
-        alert("errore nel reperimento dati!");
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
       console.log(error);
       alert("errore nel reperimento dati!");
-    } finally {
-      dispatch({ type: LOADING_FALSE, payload: false });
+    }
+  };
+};
+export const deleteME = (token) => {
+  return async (dispatch, getState) => {
+    try {
+      let resp = await fetch("http://localhost:8080/private/users/me", {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        dispatch({ type: ERROR_FALSE, payload: "" });
+        dispatch({ type: REMOVE_ME, payload: null });
+      } else {
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
+      }
+    } catch (error) {
+      console.log(error);
+      alert("errore nel reperimento dati!");
     }
   };
 };
