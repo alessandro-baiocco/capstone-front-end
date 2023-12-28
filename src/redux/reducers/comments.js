@@ -24,10 +24,9 @@ const comments = (state = initialState, action) => {
       return {
         ...state,
         content: state.content.map((singleComment) => {
-          if (singleComment.id === action.payload.comment.id) {
-            singleComment.comment = action.payload.comment;
+          if (singleComment.id === action.payload.id) {
+            singleComment = action.payload;
           }
-          console.log(singleComment.id, action.payload.comment.id);
           return singleComment;
         }),
       };
