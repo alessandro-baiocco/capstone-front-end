@@ -4,7 +4,7 @@ import ProfileInformations from "./profilePageComponents/ProfileInformations";
 import ProfileDescription from "./profilePageComponents/ProfileDescription";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { deleteME } from "../redux/action";
 
 const MyProfilePage = () => {
@@ -12,25 +12,24 @@ const MyProfilePage = () => {
   const myProfile = useSelector((state) => state.myProfile.content);
   const token = useSelector((state) => state.token.content);
   const handleDelete = () => {
-    const isOk = window.confirm("sei sicuro di voler disiscriverti ?");
-    if (isOk) {
+    const confirm = window.confirm("sei sicuro di voler disiscriverti ?");
+    if (confirm) {
       dispatch(deleteME(token));
       navigate("/");
     }
   };
 
   const dispatch = useDispatch();
-  const userId = useParams();
 
   useEffect(() => {
     if (myProfile === null) {
       navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {console.log(myProfile)}
       <Container
         fluid
         style={{

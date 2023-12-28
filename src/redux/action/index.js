@@ -486,10 +486,10 @@ export const changeComment = (body, token) => {
       });
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
-        const putComment = resp.json();
+        const putComment = await resp.json();
         dispatch({ type: PUT_COMMENT, payload: putComment });
       } else {
-        console.log("error");
+        dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
