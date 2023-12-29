@@ -77,7 +77,7 @@ export const getAllUser = (token, page) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/users?page=" + page, {
+      let resp = await fetch(url + page, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -187,7 +187,7 @@ export const getAllCards = (page) => {
         dispatch({ type: GET_CARDS, payload: cards });
       } else {
         dispatch({ type: ERROR_TRUE, payload: resp.text });
-        console.log(resp.text);
+        console.log(resp.text, resp.status);
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
