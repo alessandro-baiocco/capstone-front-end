@@ -78,7 +78,7 @@ export const getAllUser = (token, page) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch(url + "?page=" + page, {
+      let resp = await fetch(url + "/users?page=" + page, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -152,7 +152,7 @@ export const putUserRole = (body, token, id) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/users/promote/" + id, {
+      let resp = await fetch(url + "/private/users/promote/" + id, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
@@ -201,7 +201,7 @@ export const changeProfileImage = (token, profileImg) => {
 export const deleteUser = (token, userId) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/users/" + userId, {
+      let resp = await fetch(url + "/private/users/" + userId, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -222,7 +222,7 @@ export const deleteUser = (token, userId) => {
 export const deleteME = (token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/users/me", {
+      let resp = await fetch(url + "/private/users/me", {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
