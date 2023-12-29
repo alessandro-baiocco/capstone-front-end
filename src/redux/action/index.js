@@ -78,7 +78,7 @@ export const getAllUser = (token, page) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch(url + page, {
+      let resp = await fetch(url + "?page=" + page, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
