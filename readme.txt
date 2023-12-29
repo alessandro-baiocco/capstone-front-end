@@ -1,0 +1,7 @@
+link per il backend = https://github.com/alessandro-baiocco/capstone-EPICODE.git
+
+istruzioni per avvio 
+1 - aprire con vsc code o altri programmi di editing code
+2 - digitare al terminale "npm i" 
+3 - attendere l'installazione dei node_modules
+4 - digitare "npm start"

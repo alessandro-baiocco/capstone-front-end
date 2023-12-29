@@ -202,7 +202,7 @@ const ArticlePage = () => {
                       </Button>
                     )}
                     {myProfile !== null &&
-                      (myProfile.username === article.user.username || myProfile.ruolo === "ADMIN") && (
+                      (myProfile.username === article.user?.username || myProfile.ruolo === "ADMIN") && (
                         <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
                           elimina articolo
                         </Button>
