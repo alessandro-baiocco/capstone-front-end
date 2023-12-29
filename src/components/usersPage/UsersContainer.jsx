@@ -37,7 +37,7 @@ const UsersContainer = () => {
         </Alert>
       )}
       <Container
-        className="mb-4  p-0"
+        className="mb-4  p-3"
         style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}
       >
         <p className="fs-2 text-light fw-bold text-center">UTENTI</p>

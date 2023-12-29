@@ -9,8 +9,8 @@ const SingleUser = (props) => {
   const [ruolo, setRuolo] = useState({ role: props.user.ruolo });
 
   const handleDelete = () => {
-    const isOk = window.confirm("sei sicuro di voler eliminare questo utente ?");
-    if (isOk) {
+    const confirm = window.confirm("sei sicuro di voler eliminare questo utente ?");
+    if (confirm) {
       dispatch(deleteUser(props.token, props.user?.id));
     }
   };
