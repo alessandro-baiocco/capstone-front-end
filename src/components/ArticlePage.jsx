@@ -190,7 +190,7 @@ const ArticlePage = () => {
                       <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
                       {fetchedArticle?.user?.nome + " " + fetchedArticle?.user?.cognome}
                     </p>
-                    {myProfile !== null && myProfile.username === article.user?.username && (
+                    {myProfile !== null && myProfile?.username === article.user?.username && (
                       <Button
                         className="btn-primary fw-bold mx-sm-2"
                         onClick={() => {
@@ -202,7 +202,7 @@ const ArticlePage = () => {
                       </Button>
                     )}
                     {myProfile !== null &&
-                      (myProfile.username === article.user?.username || myProfile.ruolo === "ADMIN") && (
+                      (myProfile?.username === article.user?.username || myProfile.ruolo === "ADMIN") && (
                         <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
                           elimina articolo
                         </Button>

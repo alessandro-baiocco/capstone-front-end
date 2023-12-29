@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../redux/action";
+import { ERROR_FALSE, ERROR_TRUE, registerUser } from "../redux/action";
 import { useNavigate } from "react-router";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token.content);
-  const [error, setError] = useState(false);
-  const [errorText, setErrorText] = useState("");
+  const error = useSelector((state) => state.loading.error);
+  const errorText = useSelector((state) => state.loading.errorText);
   const [user, setUser] = useState({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
   const handleChange = (propertyName, propertyValue) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (user.nome !== "" || user.cognome !== "" || user.username !== "" || user.password !== "" || user.email !== "") {
+    if (user.nome !== "" && user.cognome !== "" && user.username !== "" && user.password !== "" && user.email !== "") {
       dispatch(registerUser(user));
-      console.log(user);
-      setUser({ username: "", email: "", nome: "", cognome: "", password: "", notePersonali: "" });
     } else {
-      setErrorText("per favore compila i campi neccesari ");
-      setError(true);
+      dispatch({ type: ERROR_TRUE, payload: "per favore compila i campi necessari" });
     }
   };
   useEffect(() => {
@@ -43,7 +40,7 @@ const SignUpPage = () => {
       className="p-5"
     >
       {error && (
-        <Alert variant="danger" onClose={() => setError(false)} dismissible>
+        <Alert variant="danger" onClose={() => dispatch({ type: ERROR_FALSE, payload: false })} dismissible>
           <Alert.Heading>error!</Alert.Heading>
           <p>{errorText}</p>
         </Alert>

@@ -33,13 +33,14 @@ export const registerUser = (data) => {
           "Content-Type": "application/json",
         },
       });
+      if (resp.status === 400) {
+        dispatch({ type: ERROR_TRUE, payload: "username o email gia utilizzata" });
+      }
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         const token = await resp.json();
         console.log(token);
         dispatch({ type: GET_TOKEN, payload: token.accessToken });
-      } else {
-        console.log(resp);
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
@@ -60,6 +61,14 @@ export const getUserToken = (user) => {
         },
         body: JSON.stringify(user),
       });
+      console.log(resp.status, resp.statusText);
+      if (resp.status === 404) {
+        dispatch({ type: ERROR_TRUE, payload: "le credenziali sono errate" });
+      }
+      if (resp.status === 500) {
+        dispatch({ type: ERROR_TRUE, payload: "errore lato server risolveremo presto" });
+      }
+
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let myToken = await resp.json();
