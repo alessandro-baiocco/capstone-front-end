@@ -55,7 +55,6 @@ const PostArticlePage = () => {
       article.descrizione !== ""
     ) {
       dispatch(postArticle(article, token));
-      console.log(article);
       setArticle({
         titolo: "",
         svillupatore: "",
