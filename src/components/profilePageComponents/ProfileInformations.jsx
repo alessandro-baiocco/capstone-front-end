@@ -14,7 +14,13 @@ const ProfileInformations = (props) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (user.nome !== "" && user.cognome !== "" && user.username !== "" && user.password !== "" && user.email !== "") {
+    if (
+      user.nome.length >= 3 &&
+      user.cognome.length >= 3 &&
+      user.username.length >= 3 &&
+      user.password.length >= 3 &&
+      user.email.length >= 3
+    ) {
       dispatch(putUserProfile(user, token));
       console.log(user);
     } else {
@@ -80,7 +86,7 @@ const ProfileInformations = (props) => {
 
       <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)} className="btn-close-white">
         <Modal.Header closeButton>
-          <Modal.Title>impostazioni</Modal.Title>
+          <Modal.Title>Modifica Informazioni Utente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {error && (
@@ -89,17 +95,19 @@ const ProfileInformations = (props) => {
               <p>{errorText}</p>
             </Alert>
           )}
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">USERNAME*</Form.Label>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.username.length}/30</p>
             <Form.Control
               value={user.username}
               type="text"
               size="lg"
               style={{ border: "solid 3px  #89C0F2" }}
+              maxLength={30}
               onChange={(e) => handleChange("username", e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">EMAIL*</Form.Label>
             <Form.Control
               value={user.email}
@@ -109,37 +117,43 @@ const ProfileInformations = (props) => {
               onChange={(e) => handleChange("email", e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">NOME*</Form.Label>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.nome.length}/30</p>
             <Form.Control
               value={user.nome}
               type="text"
               size="lg"
+              maxLength={30}
               style={{ border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("nome", e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">COGNOME*</Form.Label>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.cognome.length}/30</p>
             <Form.Control
               value={user.cognome}
               type="text"
               size="lg"
+              maxLength={30}
               style={{ border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("cognome", e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold mt-2">NOTE PERSONALI</Form.Label>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.descrizione.length}/30</p>
             <Form.Control
-              value={user.notePersonali}
+              value={user.descrizione}
               as="textarea"
-              style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
+              maxLength={30}
+              style={{ resize: "none", border: "solid 3px  #89C0F2" }}
               onChange={(e) => handleChange("descrizione", e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className="fw-bold">GENERE</Form.Label>
+          <Form.Group className="mb-3" style={{ position: "relative" }}>
+            <Form.Label className="fw-bold">GENERE PREFERITO</Form.Label>
 
             <Form.Select
               value={user.generePreferito ? user.generePreferito : ""}

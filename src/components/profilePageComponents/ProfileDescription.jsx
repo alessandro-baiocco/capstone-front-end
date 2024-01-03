@@ -5,7 +5,7 @@ const ProfileDescription = (props) => {
     <>
       <Container style={{ borderTop: "solid 3px  #89C0F2" }}>
         <p className="fw-bold text-light fs-2">Descrizione</p>
-        <p className="text-light fs-3" style={{ border: "solid 3px  #89C0F2", minHeight: "199px" }}>
+        <p className="text-light fs-3 px-2" style={{ border: "solid 3px  #89C0F2", minHeight: "199px" }}>
           {props.me.descrizione ? props.me.descrizione : " nessuna descrizione"}
         </p>
       </Container>
