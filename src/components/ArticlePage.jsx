@@ -247,10 +247,12 @@ const ArticlePage = () => {
               </Alert>
             )}
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">titolo</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.titolo.length}/30</p>
                 <Form.Control
                   type="text"
+                  maxLength={30}
                   size="lg"
                   style={{ border: "solid 3px #89C0F2" }}
                   onChange={(e) => handleChange("titolo", e.target.value)}
@@ -259,10 +261,12 @@ const ArticlePage = () => {
               </Form.Group>
             </Col>
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">svillupatore</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.svillupatore.length}/30</p>
                 <Form.Control
                   type="text"
+                  maxLength={30}
                   size="lg"
                   style={{ border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("svillupatore", e.target.value)}
@@ -271,11 +275,13 @@ const ArticlePage = () => {
               </Form.Group>
             </Col>
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">pubblicazione</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.pubblicazione.length}/30</p>
 
                 <Form.Control
                   type="text"
+                  maxLength={30}
                   size="lg"
                   style={{ border: "solid 3px  #89C0F2" }}
                   onChange={(e) => handleChange("pubblicazione", e.target.value)}
@@ -314,8 +320,9 @@ const ArticlePage = () => {
                 </Form.Select>
               </Form.Group>{" "}
             </Col>{" "}
-            <Form.Label className="fw-bold">generi</Form.Label>
             <Col xs={6} md={6}>
+              <Form.Label className="fw-bold">generi</Form.Label>
+
               <Form.Group className="mb-3">
                 <Form.Select
                   aria-label="Default select example"
@@ -359,7 +366,13 @@ const ArticlePage = () => {
               </Form.Group>
             </Col>
             <Col xs={6} md={6} className="d-flex mb-0 ">
-              <ul style={{ listStyle: "none", border: "solid 3px  #89C0F2", minWidth: "134px" }} className="p-0">
+              <ul
+                style={{ listStyle: "none", border: "solid 3px  #89C0F2", minWidth: "134px", position: "relative" }}
+                className="p-0 mt-4"
+              >
+                <p className="mb-0" style={{ position: "absolute", bottom: "0px", right: "3px" }}>
+                  {generi.length}/3
+                </p>
                 {generi?.map((genre, i) => {
                   return (
                     <li className="fw-bold" key={`list-item-${i}`}>
@@ -377,33 +390,39 @@ const ArticlePage = () => {
               </ul>
             </Col>
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">storia</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.storia.length}/900</p>
                 <Form.Control
                   as="textarea"
-                  style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
+                  maxLength={900}
+                  style={{ border: "solid 3px  #89C0F2", height: "115px", resize: "none" }}
                   onChange={(e) => handleChange("storia", e.target.value)}
                   value={article?.storia}
                 />
               </Form.Group>
             </Col>
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold ">esperienza</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.esperienza.length}/400</p>
                 <Form.Control
                   as="textarea"
-                  style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
+                  maxLength={400}
+                  style={{ border: "solid 3px  #89C0F2", height: "115px", resize: "none" }}
                   onChange={(e) => handleChange("esperienza", e.target.value)}
                   value={article?.esperienza}
                 />
               </Form.Group>
             </Col>
             <Col xs={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold ">consigli</Form.Label>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.consigli.length}/400</p>
                 <Form.Control
                   as="textarea"
-                  style={{ maxHeight: "100px", border: "solid 3px  #89C0F2" }}
+                  maxLength={400}
+                  style={{ border: "solid 3px  #89C0F2", height: "115px", resize: "none" }}
                   onChange={(e) => handleChange("consigli", e.target.value)}
                   value={article?.consigli}
                 />
