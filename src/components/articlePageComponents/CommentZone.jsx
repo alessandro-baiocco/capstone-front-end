@@ -104,15 +104,24 @@ const CommentZone = (props) => {
             <img src={myProfile.avatar} alt="profile-avatar" width={"100%"} height={"100%"} />
           </Col>
           <Col xs={10}>
-            <Form.Group>
+            <Form.Group style={{ position: "relative" }}>
               <Form.Label className="fw-bold text-light fs-2">{myProfile.username}</Form.Label>
               <Form.Control
                 as="textarea"
-                style={{ backgroundColor: "rgb(36 112 222 / 32%)", maxHeight: "120px", border: "solid 3px  #89C0F2" }}
+                style={{
+                  backgroundColor: "rgb(36 112 222 / 32%)",
+                  height: "100px",
+                  border: "solid 3px  #89C0F2",
+                  resize: "none",
+                }}
                 onChange={(e) => setMyComment(e.target.value)}
                 value={myComment}
-                className="fw-bold text-light"
+                maxLength={200}
+                className="fw-bold text-light mb-2"
               />
+              <p className="text-light" style={{ position: "absolute", top: "16px", right: "3px" }}>
+                {myComment.length}/200
+              </p>
               <Button
                 className="btn-primary fw-bold"
                 style={{ fontSize: "16px", border: "solid 3px  #89C0F2" }}

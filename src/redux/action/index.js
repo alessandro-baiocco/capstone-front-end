@@ -172,9 +172,6 @@ export const putUserRole = (body, token, id) => {
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: SUCCESS_TRUE, payload: true });
-      } else {
-        console.log("error");
-        alert("errore nel post!");
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });

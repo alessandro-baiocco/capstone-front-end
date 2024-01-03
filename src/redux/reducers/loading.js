@@ -35,6 +35,8 @@ const loading = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        success: false,
+        error: false,
       };
     case LOADING_FALSE:
       return {

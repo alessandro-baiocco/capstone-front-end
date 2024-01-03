@@ -37,7 +37,7 @@ const MyProfilePage = () => {
             "url(https://as2.ftcdn.net/v2/jpg/05/91/90/95/1000_F_591909533_UfNjf5M9QS1DgegeIgN60pTTIQyUUYqG.jpg)",
           objectFit: "cover",
         }}
-        className="p-5"
+        className="px-1 px-md-3 px-lg-5 pt-5"
       >
         <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
           <Row>

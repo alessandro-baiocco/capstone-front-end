@@ -75,11 +75,13 @@ const SingleComment = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" style={{ position: "relative" }}>
+              <p style={{ position: "absolute", top: "16px", right: "3px" }}>{comment.comment.length}/200</p>
               <Form.Control
                 as="textarea"
                 rows={3}
                 value={comment.comment}
+                maxLength={200}
                 onChange={(e) => handleChange(e.target.value)}
               />
             </Form.Group>
