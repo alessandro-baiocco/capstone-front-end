@@ -83,7 +83,7 @@ const MainPageCards = (props) => {
                   </div>
                   <hr className="text-light border border-3 border-light  opacity-100"></hr>
                   <div className="card-body d-flex justify-content-center pb-2 p-0 ">
-                    <Link to={`/article/${card.blogArticle.id}`}>
+                    <Link to={`/article/${card.blogArticle?.id}`}>
                       <Button className="btn btn-primary">leggi</Button>
                     </Link>
                   </div>
