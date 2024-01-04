@@ -310,9 +310,7 @@ export const postArticle = (body, token) => {
       });
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
-      } else {
-        console.log("error");
-        dispatch({ type: ERROR_TRUE, payload: resp.text });
+        dispatch({ type: SUCCESS_TRUE, payload: "" });
       }
     } catch (error) {
       console.log(error);
@@ -362,6 +360,7 @@ export const deleteArticle = (articleId, token) => {
       });
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
+        dispatch({ type: REMOVE_CARDS, payload: null });
         dispatch({ type: DELETE_ARTICLE, payload: null });
       } else {
         console.log("error");
