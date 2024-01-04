@@ -190,7 +190,7 @@ const ArticlePage = () => {
                       <strong className="fw-bold">AUTORE ARTICOLO :</strong>{" "}
                       {fetchedArticle?.user?.nome + " " + fetchedArticle?.user?.cognome}
                     </p>
-                    {myProfile !== null && myProfile?.username === article.user?.username && (
+                    {myProfile?.username === fetchedArticle?.user?.username && (
                       <Button
                         className="btn-primary fw-bold mx-sm-2"
                         onClick={() => {
@@ -202,7 +202,7 @@ const ArticlePage = () => {
                       </Button>
                     )}
                     {myProfile !== null &&
-                      (myProfile?.username === article.user?.username || myProfile.ruolo === "ADMIN") && (
+                      (myProfile?.username === fetchedArticle?.user?.username || myProfile?.ruolo === "ADMIN") && (
                         <Button className="btn-danger fw-bold" onClick={() => handleDelete()}>
                           elimina articolo
                         </Button>
@@ -249,7 +249,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">titolo</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.titolo.length}/30</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.titolo?.length}/30</p>
                 <Form.Control
                   type="text"
                   maxLength={30}
@@ -263,7 +263,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">svillupatore</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.svillupatore.length}/30</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.svillupatore.length}/30</p>
                 <Form.Control
                   type="text"
                   maxLength={30}
@@ -277,7 +277,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">pubblicazione</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.pubblicazione.length}/30</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.pubblicazione.length}/30</p>
 
                 <Form.Control
                   type="text"
@@ -371,7 +371,7 @@ const ArticlePage = () => {
                 className="p-0 mt-4"
               >
                 <p className="mb-0" style={{ position: "absolute", bottom: "0px", right: "3px" }}>
-                  {generi.length}/3
+                  {generi?.length}/3
                 </p>
                 {generi?.map((genre, i) => {
                   return (
@@ -392,7 +392,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold">storia</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.storia.length}/900</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.storia.length}/900</p>
                 <Form.Control
                   as="textarea"
                   maxLength={900}
@@ -405,7 +405,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold ">esperienza</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.esperienza.length}/400</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.esperienza.length}/400</p>
                 <Form.Control
                   as="textarea"
                   maxLength={400}
@@ -418,7 +418,7 @@ const ArticlePage = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group className="mb-3" style={{ position: "relative" }}>
                 <Form.Label className="fw-bold ">consigli</Form.Label>
-                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article.consigli.length}/400</p>
+                <p style={{ position: "absolute", top: "0px", right: "3px" }}>{article?.consigli.length}/400</p>
                 <Form.Control
                   as="textarea"
                   maxLength={400}

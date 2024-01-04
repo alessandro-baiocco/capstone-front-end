@@ -12,7 +12,7 @@ const article = (state = initialState, action) => {
       };
     case DELETE_ARTICLE:
       return {
-        content: action.payload,
+        content: null,
       };
     default:
       return state;
