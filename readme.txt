@@ -5,3 +5,9 @@ istruzioni per avvio
 2 - digitare al terminale "npm i" 
 3 - attendere l'installazione dei node_modules
 4 - digitare "npm start"
+
+
+tecnologie utilizzate
+
+1 - visual studio code come programma di editing codice
+2 - react framework 
