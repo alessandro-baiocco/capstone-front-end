@@ -33,9 +33,11 @@ const ArticlePage = () => {
     } else if (!article.genresList.includes(propertyValue) && article.genresList.length < 3) {
       article.genresList.push(propertyValue);
       setGeneri([...generi, propertyValue]);
+      console.log(generi, article.genresList);
     } else if (!article.genresList.includes(propertyValue) && article.genresList.length > 2) {
       setErrorText("lista troppo lunga (massimo 3 generi)");
       setError(true);
+      console.log(generi, article.genresList);
     }
   };
 
@@ -380,8 +382,8 @@ const ArticlePage = () => {
                       <i
                         className="bi bi-x-circle mx-1"
                         onClick={(e) => {
-                          handleRemove(genre);
                           setRemove(genre);
+                          handleRemove(genre);
                         }}
                       ></i>
                     </li>

@@ -73,7 +73,10 @@ const MainPageCards = (props) => {
                     style={{ height: "382px", objectFit: "cover" }}
                   />
                   <div className="card-body p-0">
-                    <h5 className="card-title m-2" style={{ fontFamily: "Geostar Fill, serif" }}>
+                    <h5
+                      className="card-title m-2"
+                      style={{ fontFamily: "Geostar Fill, serif", overflow: "hidden", height: "24px" }}
+                    >
                       {card.titolo}
                     </h5>
                     <hr className="text-light  border border-3 border-light opacity-100"></hr>

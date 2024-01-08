@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeimageArticle } from "../../redux/action";
 
 const ArticleSpecitics = (props) => {
+  const fetchedArticle = useSelector((state) => state.article.content);
+  const myProfile = useSelector((state) => state.myProfile.content);
   //compilazione campi
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -86,21 +88,23 @@ const ArticleSpecitics = (props) => {
               width={"100%"}
               style={{ objectFit: "cover" }}
             />
-            <Button
-              className="p-1 py-0"
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "5px",
-                backgroundColor: "rgb(36 112 222 / 62%)",
-                width: "fit-content",
-              }}
-              onClick={() => {
-                handleShow("lg-down");
-              }}
-            >
-              <i className="bi bi-pen text-light"></i>
-            </Button>
+            {myProfile?.username === fetchedArticle?.user?.username && (
+              <Button
+                className="p-1 py-0"
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "5px",
+                  backgroundColor: "rgb(36 112 222 / 62%)",
+                  width: "fit-content",
+                }}
+                onClick={() => {
+                  handleShow("lg-down");
+                }}
+              >
+                <i className="bi bi-pen text-light"></i>
+              </Button>
+            )}
           </Col>
         </Row>
       </Container>
