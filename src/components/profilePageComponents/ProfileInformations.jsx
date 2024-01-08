@@ -14,16 +14,11 @@ const ProfileInformations = (props) => {
     setUser({ ...user, [propertyName]: propertyValue });
   };
   const handleSubmit = (propertyName, propertyValue) => {
-    if (
-      user.nome.length >= 3 &&
-      user.cognome.length >= 3 &&
-      user.username.length >= 3 &&
-      user.password.length >= 3 &&
-      user.email.length >= 3
-    ) {
+    if (user.nome?.length >= 3 && user.cognome?.length >= 3 && user.username?.length >= 3 && user.email?.length >= 3) {
       dispatch(putUserProfile(user, token));
       console.log(user);
     } else {
+      console.log(user);
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
     }
@@ -97,7 +92,7 @@ const ProfileInformations = (props) => {
           )}
           <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">USERNAME*</Form.Label>
-            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.username.length}/30</p>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.username?.length}/30</p>
             <Form.Control
               value={user.username}
               type="text"
@@ -119,7 +114,7 @@ const ProfileInformations = (props) => {
           </Form.Group>
           <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">NOME*</Form.Label>
-            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.nome.length}/30</p>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.nome?.length}/30</p>
             <Form.Control
               value={user.nome}
               type="text"
@@ -131,7 +126,7 @@ const ProfileInformations = (props) => {
           </Form.Group>
           <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold">COGNOME*</Form.Label>
-            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.cognome.length}/30</p>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.cognome?.length}/30</p>
             <Form.Control
               value={user.cognome}
               type="text"
@@ -143,7 +138,7 @@ const ProfileInformations = (props) => {
           </Form.Group>
           <Form.Group className="mb-3" style={{ position: "relative" }}>
             <Form.Label className="fw-bold mt-2">NOTE PERSONALI</Form.Label>
-            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.descrizione.length}/30</p>
+            <p style={{ position: "absolute", top: "0px", right: "3px" }}>{user.descrizione?.length}/30</p>
             <Form.Control
               value={user.descrizione}
               as="textarea"
