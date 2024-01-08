@@ -15,7 +15,6 @@ const ArticleSpecitics = (props) => {
   const handleSubmit = () => {
     if (image !== null) {
       dispatch(changeimageArticle(props.token, image, props.article.id));
-      console.log(image);
       setShow(false);
       setImage(null);
       setPreview(null);

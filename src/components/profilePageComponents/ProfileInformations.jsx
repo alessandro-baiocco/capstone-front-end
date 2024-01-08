@@ -16,9 +16,7 @@ const ProfileInformations = (props) => {
   const handleSubmit = (propertyName, propertyValue) => {
     if (user.nome?.length >= 3 && user.cognome?.length >= 3 && user.username?.length >= 3 && user.email?.length >= 3) {
       dispatch(putUserProfile(user, token));
-      console.log(user);
     } else {
-      console.log(user);
       setErrorText("per favore compila i campi neccesari ");
       setError(true);
     }

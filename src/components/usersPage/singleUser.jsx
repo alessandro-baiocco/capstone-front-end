@@ -16,10 +16,7 @@ const SingleUser = (props) => {
   };
   const handleChangeRole = () => {
     if (ruolo.role !== props.user.ruolo) {
-      console.log(ruolo);
       dispatch(putUserRole(ruolo, props.token, props.user?.id));
-    } else {
-      console.log("non ha funzionato");
     }
   };
 
