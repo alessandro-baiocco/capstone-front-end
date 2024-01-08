@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form, Modal } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeCoverArticle } from "../../redux/action";
 
 const ArticleCover = (props) => {
@@ -16,6 +16,8 @@ const ArticleCover = (props) => {
   //-------------------------
 
   //compilazione campi
+  const fetchedArticle = useSelector((state) => state.article.content);
+  const myProfile = useSelector((state) => state.myProfile.content);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [image, setImage] = useState(null);
@@ -45,23 +47,25 @@ const ArticleCover = (props) => {
           src={props.image}
           alt="game-cover"
           className="img-fluid"
-          style={{ maxHeight: "100px", width: "100%", objectFit: "cover" }}
+          style={{ maxHeight: "150px", width: "100%", objectFit: "cover", objectPosition: "top" }}
         />
-        <Button
-          className="p-1 py-0"
-          style={{
-            position: "absolute",
-            right: "10px",
-            top: "3px",
-            backgroundColor: "rgb(36 112 222 / 62%)",
-            width: "fit-content",
-          }}
-          onClick={() => {
-            handleShow("lg-down");
-          }}
-        >
-          <i className="bi bi-pen text-light"></i>
-        </Button>
+        {myProfile?.username === fetchedArticle?.user?.username && (
+          <Button
+            className="p-1 py-0"
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "3px",
+              backgroundColor: "rgb(36 112 222 / 62%)",
+              width: "fit-content",
+            }}
+            onClick={() => {
+              handleShow("lg-down");
+            }}
+          >
+            <i className="bi bi-pen text-light"></i>
+          </Button>
+        )}
       </Container>
 
       <Modal
@@ -107,9 +111,10 @@ const ArticleCover = (props) => {
                   className="img-fluid my-2"
                   style={{
                     border: "solid 3px  white",
-                    height: "100px",
+                    height: "80px",
                     width: "100%",
                     objectFit: "cover",
+                    objectPosition: "top",
                   }}
                 />
               )}
