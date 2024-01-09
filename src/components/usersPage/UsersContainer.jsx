@@ -41,10 +41,10 @@ const UsersContainer = () => {
         style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}
       >
         <p className="fs-2 text-light fw-bold text-center">UTENTI</p>
+        <Row>{users && users.map((user, i) => <SingleUser user={user} key={`user-${i}`} token={token} />)}</Row>
         <Pagination className="justify-content-center" size="sm">
           {items}
         </Pagination>
-        ;<Row>{users && users.map((user, i) => <SingleUser user={user} key={`user-${i}`} token={token} />)}</Row>
       </Container>
     </>
   );
