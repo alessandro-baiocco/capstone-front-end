@@ -75,7 +75,7 @@ const SingleComment = (props) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" style={{ position: "relative" }}>
-              <p style={{ position: "absolute", top: "16px", right: "3px" }}>{comment.comment.length}/200</p>
+              <p style={{ position: "absolute", bottom: "4px", right: "3px" }}>{comment.comment.length}/200</p>
               <Form.Control
                 as="textarea"
                 rows={3}
