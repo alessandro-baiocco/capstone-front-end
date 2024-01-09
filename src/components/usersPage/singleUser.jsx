@@ -28,7 +28,7 @@ const SingleUser = (props) => {
           backgroundColor: "rgb(36 112 222 / 32%)",
           border: "solid 3px #89C0F2",
           position: "relative",
-          minHeight: "483px",
+          minHeight: "503px",
         }}
       >
         <Card.Img variant="top" src={props.user?.avatar} style={{ maxHeight: "249px", objectFit: "cover" }} />
