@@ -11,10 +11,6 @@ const MainPageCards = (props) => {
 
   return (
     <Container style={{ backgroundColor: "rgb(36 112 222 / 32%)", border: "solid 3px #89C0F2" }}>
-      <Container className="d-flex justify-content-center">
-        <Pagination size="sm">{props.items}</Pagination>;
-      </Container>
-
       {isError && (
         <Alert variant="danger" onClose={() => dispatch({ type: ERROR_FALSE, payload: "" })} dismissible>
           <Alert.Heading>
@@ -95,6 +91,9 @@ const MainPageCards = (props) => {
             );
           })}
       </Row>
+      <Container className="d-flex justify-content-center">
+        <Pagination size="sm">{props.items}</Pagination>;
+      </Container>
     </Container>
   );
 };

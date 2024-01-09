@@ -40,7 +40,6 @@ export const registerUser = (data) => {
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         const token = await resp.json();
-        console.log(token);
         dispatch({ type: GET_TOKEN, payload: token.accessToken });
       }
     } catch (error) {
@@ -62,7 +61,6 @@ export const getUserToken = (user) => {
         },
         body: JSON.stringify(user),
       });
-      console.log(resp.status, resp.statusText);
       if (resp.status === 404) {
         dispatch({ type: ERROR_TRUE, payload: "le credenziali sono errate" });
       }
@@ -73,7 +71,6 @@ export const getUserToken = (user) => {
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let myToken = await resp.json();
-        console.log(myToken.accessToken);
         dispatch({ type: GET_TOKEN, payload: myToken.accessToken });
       }
     } catch (error) {
@@ -87,7 +84,7 @@ export const getAllUser = (token, page) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch(url + "?page=" + page, {
+      let resp = await fetch(url + "/private/users?page=" + page, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -119,7 +116,6 @@ export const getUserInformation = (userId, token) => {
       if (resp.ok) {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let me = await resp.json();
-        console.log(me);
         dispatch({ type: GET_ME, payload: me });
       }
     } catch (error) {
@@ -146,9 +142,6 @@ export const putUserProfile = (body, token) => {
         dispatch({ type: ERROR_FALSE, payload: "" });
         let user = await resp.json();
         dispatch({ type: GET_ME, payload: user });
-      } else {
-        console.log("error");
-        alert("errore nel post!");
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
@@ -161,7 +154,7 @@ export const putUserRole = (body, token, id) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     try {
-      let resp = await fetch("http://localhost:8080/private/users/promote/" + id, {
+      let resp = await fetch(url + "/private/users/promote/" + id, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
@@ -186,7 +179,6 @@ export const changeProfileImage = (token, profileImg) => {
     dispatch({ type: LOADING_TRUE, payload: true });
     const formData = new FormData();
     formData.append("avatar", profileImg);
-    console.log(formData);
     const resp = await fetch(url + "/private/users/me/upload", {
       method: "PATCH",
       body: formData,
@@ -200,14 +192,13 @@ export const changeProfileImage = (token, profileImg) => {
       dispatch({ type: GET_ME, payload: me });
     } else {
       dispatch({ type: ERROR_TRUE, payload: resp.text });
-      console.log(resp.text);
     }
   };
 };
 export const deleteUser = (token, userId) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/users/" + userId, {
+      let resp = await fetch(url + "/private/users/" + userId, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -220,15 +211,14 @@ export const deleteUser = (token, userId) => {
         dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel reperimento dati!");
+      dispatch({ type: ERROR_TRUE, payload: "errore nel reperimento dati!" });
     }
   };
 };
 export const deleteME = (token) => {
   return async (dispatch, getState) => {
     try {
-      let resp = await fetch("http://localhost:8080/private/users/me", {
+      let resp = await fetch(url + "/private/users/me", {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -241,8 +231,7 @@ export const deleteME = (token) => {
         dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel reperimento dati!");
+      dispatch({ type: ERROR_TRUE, payload: "errore nel reperimento dati!" });
     }
   };
 };
@@ -262,11 +251,9 @@ export const getAllCards = (page) => {
         dispatch({ type: GET_CARDS, payload: cards });
       } else {
         dispatch({ type: ERROR_TRUE, payload: resp.text });
-        console.log(resp.text, resp.status);
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
-      console.log(error);
     } finally {
       dispatch({ type: LOADING_FALSE, payload: false });
     }
@@ -287,11 +274,10 @@ export const getArticle = (articleId) => {
         dispatch({ type: GET_ARTICLE, payload: article });
         dispatch({ type: GET_COMMENTS, payload: reversedComment });
       } else {
-        console.log("error");
         dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
-      console.log(error);
+      dispatch({ type: ERROR_TRUE, payload: "errore nel reperimento dati" });
     } finally {
       dispatch({ type: LOADING_FALSE, payload: false });
     }
@@ -314,7 +300,7 @@ export const postArticle = (body, token) => {
         dispatch({ type: SUCCESS_TRUE, payload: "" });
       }
     } catch (error) {
-      console.log(error);
+      dispatch({ type: ERROR_TRUE, payload: "errore nel reperimento dati" });
     } finally {
       dispatch({ type: LOADING_FALSE, payload: false });
     }
@@ -338,11 +324,10 @@ export const putArticle = (articleId, body, token) => {
         let article = await resp.json();
         dispatch({ type: GET_ARTICLE, payload: article });
       } else {
-        console.log("error");
         dispatch({ type: ERROR_TRUE, payload: resp.text });
       }
     } catch (error) {
-      console.log(error);
+      dispatch({ type: ERROR_TRUE, payload: "errore nel reperimento dati" });
     } finally {
       dispatch({ type: LOADING_FALSE, payload: false });
     }
@@ -363,13 +348,9 @@ export const deleteArticle = (articleId, token) => {
         dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: REMOVE_CARDS, payload: null });
         dispatch({ type: DELETE_ARTICLE, payload: null });
-      } else {
-        console.log("error");
-        alert("errore nel reperimento dati!");
       }
     } catch (error) {
-      console.log(error);
-      alert("errore nel reperimento dati!");
+      dispatch({ type: ERROR_TRUE, payload: "errore nell'eliminazione dell'articolo" });
     } finally {
       dispatch({ type: LOADING_FALSE, payload: false });
     }
@@ -383,7 +364,6 @@ export const changeCoverArticle = (token, coverImg, id) => {
     try {
       const formData = new FormData();
       formData.append("picture", coverImg);
-      console.log(formData);
       const resp = await fetch(url + "/private/articles/" + id + "/secondary", {
         method: "PATCH",
         body: formData,
@@ -407,7 +387,6 @@ export const changeimageArticle = (token, coverImg, id) => {
     try {
       const formData = new FormData();
       formData.append("picture", coverImg);
-      console.log(formData);
       const resp = await fetch(url + "/private/articles/" + id + "/primary", {
         method: "PATCH",
         body: formData,
@@ -444,8 +423,7 @@ export const postComment = (comment, token) => {
         let myComment = await resp.json();
         dispatch({ type: POST_COMMENT, payload: myComment });
       } else {
-        console.log("error");
-        alert("errore nel post!");
+        dispatch({ type: ERROR_TRUE, payload: "errore nel post" });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
@@ -468,8 +446,7 @@ export const deleteComment = (id, token) => {
         dispatch({ type: ERROR_FALSE, payload: "" });
         dispatch({ type: DELETE_COMMENT, payload: id });
       } else {
-        console.log("error");
-        alert("errore nel post!");
+        dispatch({ type: ERROR_TRUE, payload: "errore nell'eliminazione del commento" });
       }
     } catch (error) {
       dispatch({ type: ERROR_TRUE, payload: error.message });
