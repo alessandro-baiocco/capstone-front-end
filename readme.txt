@@ -11,3 +11,6 @@ tecnologie utilizzate
 
 1 - visual studio code come programma di editing codice
 2 - react framework 
+3 - redux 
+4 - react-router-dom
+5 - react-boostrap
